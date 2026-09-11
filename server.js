@@ -733,7 +733,7 @@ app.post('/api/approve/girls-warden', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+}); 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/security', (req, res) => res.sendFile(path.join(__dirname, 'security.html')));
 
