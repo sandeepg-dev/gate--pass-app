@@ -3,101 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GateMatrix • Institutional Access Portal</title>
+  <title>GRT Institute of Engineering and Technology • Gate Clearance Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
-  <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
+  <style>
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  
+}
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between p-4 md:p-8">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between p-3 md:p-6">
 
-  <!-- Header -->
-  <header class="max-w-7xl w-full mx-auto flex flex-wrap items-center justify-between pb-6 border-b border-slate-200 gap-4">
-    <div class="flex items-center gap-3">
-      <div class="w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-500/20">
-        GM
+  <!-- SPLASH SCREEN -->
+  <div id="splashScreen" class="fixed inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center text-white transition-all duration-1000 p-4" style="background-image: url('splash-bg.jpg');">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-xs"></div>
+    <div class="relative z-10 flex flex-col items-center text-center">
+      <div class="bg-white/95 p-4 rounded-3xl shadow-2xl mb-5 border-4 border-amber-400 animate-pulse">
+        <img src="logo.jpg" alt="GRT Logo" class="w-28 h-28 object-contain">
       </div>
-      <div>
-        <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">GateMatrix</h1>
-        <p class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Campus Clearance & Formal Leave Engine</p>
-      </div>
+      <span class="px-3 py-1 bg-red-600 text-white rounded-full text-[10px] font-extrabold tracking-widest uppercase mb-3 shadow">An Autonomous Institution</span>
+      <h1 class="text-xl md:text-3xl font-black uppercase tracking-wider text-amber-400 max-w-2xl leading-snug drop-shadow-md">
+        GRT Institute of Engineering and Technology
+      </h1>
+      <p class="text-xs font-bold text-slate-200 mt-2 uppercase tracking-widest drop-shadow">
+        GateMatrix Autonomous Outpass & Governance System
+      </p>
     </div>
-    <div class="text-right text-xs text-slate-500 font-medium">
-      Role-Isolated Institutional Network
+  </div>
+
+  <script>
+    setTimeout(function() {
+      const splash = document.getElementById('splashScreen');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => splash.remove(), 800);
+      }
+    }, 2000);
+  </script>
+
+  <!-- OFFICIAL HEADER -->
+  <header class="max-w-7xl w-full mx-auto glass-panel border border-white/50 rounded-3xl p-5 mb-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
+      <div class="flex flex-col sm:flex-row items-center gap-4">
+        <img src="logo.jpg" alt="GRT Logo" class="w-20 h-20 object-contain rounded-xl shadow-md border border-slate-100 bg-white p-1">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug uppercase">
+            GRT Institute of Engineering and Technology
+          </h1>
+          <p class="text-xs sm:text-sm font-bold text-red-600 tracking-wide uppercase">
+            Tiruttani • (An Autonomous Institution)
+          </p>
+          <p class="text-[11px] font-semibold text-slate-600 mt-0.5">
+            Institutional Outpass Clearance & Authority Engine
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        <span class="px-2.5 py-1 bg-amber-50/90 border border-amber-300 text-amber-900 rounded-lg text-[10px] font-extrabold shadow-sm">★ NAAC A++ ACCREDITED</span>
+        <span class="px-2.5 py-1 bg-blue-50/90 border border-blue-300 text-blue-900 rounded-lg text-[10px] font-extrabold shadow-sm">AICTE APPROVED</span>
+        <span class="px-2.5 py-1 bg-indigo-50/90 border border-indigo-300 text-indigo-900 rounded-lg text-[10px] font-extrabold shadow-sm">ANNA UNIVERSITY AFFILIATED</span>
+      </div>
     </div>
   </header>
 
-  <!-- SCREEN 1: 5 CIRCLE PORTALS -->
-  <main id="portalSelectionScreen" class="max-w-4xl w-full mx-auto my-auto py-10">
-    <div class="text-center mb-10 space-y-2">
-      <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Select Institutional Authority</h2>
-      <p class="text-sm text-slate-500 max-w-md mx-auto">Click your authority portal and enter your PIN code to access.</p>
+  <!-- SCREEN 1: 5 AUTHORITY HUBS -->
+ <main id="portalSelectionScreen" class="max-w-4xl w-full mx-auto my-auto py-6 bg-white/85 backdrop-blur-md relative overflow-hidden rounded-3xl p-6 shadow-xl border border-white/40">
+  <div class="absolute inset-0 z-0 opacity-[0.8] pointer-events-none" 
+       style="background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20231013/pngtree-luxurious-cream-beige-brown-cotton-silk-texture-pattern-with-abstract-light-image_13668363.png'); background-repeat: no-repeat; background-position: center; background-size: 180%;"></div>
+
+  <!-- YOUR CONTENT WRAPPER -->
+  <div class="relative z-10">
+    <!-- All your portal cards and headers stay here -->
+    <div class="text-center bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white rounded-2xl p-5 shadow-lg border border-red-700 space-y-1">
+      <span class="text-[10px] bg-amber-400 text-red-950 font-black px-2.5 py-0.5 rounded-full uppercase tracking-widest shadow-inner">Secure Gateway</span>
+      <h2 class="text-xl md:text-2xl font-black uppercase tracking-tight pt-1">GRT GateMatrix Enterprise</h2>
+      <p class="text-[11px] text-red-100 font-medium tracking-wide">Autonomous Outpass, Clearance & Institutional Governance System</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-3xl mx-auto">
+    <div class="text-center space-y-1">
+      <h3 class="text-lg font-extrabold text-slate-900 tracking-tight">Select Authentication Tier</h3>
+      <p class="text-xs text-slate-500 font-medium max-w-md mx-auto">Choose your administrative or student portal and enter your credentials.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center max-w-3xl mx-auto">
       <div class="space-y-6 flex flex-col items-center">
-        <button onclick="requestUnlock('student', 'Student Portal', '1111')" class="group flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white border-2 border-slate-200 hover:border-blue-500 shadow-md hover:shadow-xl transition duration-300 active:scale-95">
-          <span class="text-3xl mb-1 group-hover:scale-110 transition">👨‍🎓</span>
-          <span class="text-xs font-bold text-slate-800 group-hover:text-blue-600">Student</span>
-          <span class="text-[10px] text-slate-400 font-mono mt-0.5">PIN: 1111</span>
+        <button onclick="requestUnlock('student', 'Student Portal', '1111')" class="group relative flex flex-col items-center justify-center w-36 h-36 rounded-3xl bg-white border-slate-200 hover:border-blue-500 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95">
+          <span class="text-3xl mb-1 group-hover:scale-110 transition duration-300">👨‍🎓</span>
+          <span class="text-xs font-bold text-slate-800 group-hover:text-blue-600 mt-1">Student Portal</span>
+          <span class="text-[9px] text-slate-400 font-mono mt-0.5 bg-slate-100 px-2 py-0.5 rounded-full"></span>
         </button>
 
-        <button onclick="requestUnlock('counselor', 'Counselor Portal', '2222')" class="group flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white border-2 border-slate-200 hover:border-emerald-500 shadow-md hover:shadow-xl transition duration-300 active:scale-95">
-          <span class="text-3xl mb-1 group-hover:scale-110 transition">📋</span>
-          <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-600">Counselor</span>
-          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Roll Range</span>
+        <button onclick="requestUnlock('counselor', 'Class Counselor Portal', '2222')" class="group relative flex flex-col items-center justify-center w-36 h-36 rounded-3xl bg-white border border-slate-200 hover:border-emerald-500 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95">
+          <span class="text-3xl mb-1 group-hover:scale-110 transition duration-300">📋</span>
+          <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-600 mt-1">Class Counselor</span>
+          <span class="text-[9px] text-slate-400 font-mono mt-0.5 bg-slate-100 px-2 py-0.5 rounded-full"></span>
         </button>
       </div>
 
       <div class="flex flex-col items-center">
-        <button onclick="requestUnlock('principal', 'Principal / Admin Office', '5555')" class="group relative flex flex-col items-center justify-center w-48 h-48 rounded-full bg-gradient-to-b from-white to-blue-50/50 border-4 border-blue-600 shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300 active:scale-95">
-          <span class="absolute -top-3 bg-blue-600 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow">Executive</span>
-          <span class="text-4xl mb-1 group-hover:scale-110 transition">🏛️</span>
-          <span class="text-sm font-extrabold text-slate-900 group-hover:text-blue-600 text-center px-4">Principal / Admin</span>
-          <span class="text-[10px] text-slate-500 font-mono mt-0.5">College-Wide Sign-Off</span>
+        <button onclick="requestUnlock('principal', 'Principal Directorate', '5555')" class="group relative flex flex-col items-center justify-center w-64 h-64 rounded-3xl bg-gradient-to-b from-slate-900 to-red-950 border-2 border-red-600 shadow-2xl hover:scale-105 transition-all duration-300 active:scale-95 text-white">
+          <span class="absolute -top-3 bg-red-600 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Executive Tier</span>
+          <span class="text-4xl mb-1 group-hover:scale-110 transition duration-300">🏛️</span>
+          <span class="text-xs font-black tracking-wide text-center px-2 group-hover:text-amber-400">Principal Office</span>
+          <span class="text-[9px] text-slate-400 font-mono mt-0.5 bg-white/10 px-2.5 py-0.5 rounded-full"></span>
         </button>
       </div>
-
       <div class="space-y-6 flex flex-col items-center">
-        <button onclick="requestUnlock('advisor', 'Class Advisor Portal', '3333')" class="group flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white border-2 border-slate-200 hover:border-indigo-500 shadow-md hover:shadow-xl transition duration-300 active:scale-95">
-          <span class="text-3xl mb-1 group-hover:scale-110 transition">🧑‍🏫</span>
-          <span class="text-xs font-bold text-slate-800 group-hover:text-indigo-600">Class Advisor</span>
-          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Section Oversight</span>
+        <button onclick="requestUnlock('advisor', 'Class Advisor Portal', '3333')" class="group relative flex flex-col items-center justify-center w-36 h-36 rounded-3xl bg-white border border-slate-200 hover:border-indigo-500 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95">
+          <span class="text-3xl mb-1 group-hover:scale-110 transition duration-300">🧑‍🏫</span>
+          <span class="text-xs font-bold text-slate-800 group-hover:text-indigo-600 mt-1">Class Advisor</span>
+          <span class="text-[9px] text-slate-400 font-mono mt-0.5 bg-slate-100 px-2 py-0.5 rounded-full"></span>
         </button>
 
-        <button onclick="requestUnlock('hod', 'Head of Dept (HOD)', '4444')" class="group flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white border-2 border-slate-200 hover:border-purple-500 shadow-md hover:shadow-xl transition duration-300 active:scale-95">
-          <span class="text-3xl mb-1 group-hover:scale-110 transition">🎓</span>
-          <span class="text-xs font-bold text-slate-800 group-hover:text-purple-600">HOD</span>
-          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Dept Authorization</span>
+        <button onclick="requestUnlock('hod', 'Head of Department (HOD)', '4444')" class="group relative flex flex-col items-center justify-center w-36 h-36 rounded-3xl bg-white border border-slate-200 hover:border-purple-500 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95">
+          <span class="text-3xl mb-1 group-hover:scale-110 transition duration-300">🎓</span>
+          <span class="text-xs font-bold text-slate-800 group-hover:text-purple-600 mt-1">Dept HOD</span>
+          <span class="text-[9px] text-slate-400 font-mono mt-0.5 bg-slate-100 px-2 py-0.5 rounded-full"></span>
         </button>
+        
       </div>
     </div>
-  </main>
+    <div class="bg-sandel/85 backdrop-blur-md p-5 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group">
+  <div class="w-15 h-15 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+    <!-- Hostel / Building Icon -->
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+    </svg>
+  </div>
+  <h3 class="font-bold text-slate-800 text-sm mb-1">Hostel Wardens</h3>
+  <p class="text-xs text-slate-500 mb-4">Select warden portal</p>
+  
+  <div class="flex gap-2 w-full">
+    <button onclick="requestUnlock('boys_warden', 'Boys Hostel Warden', '6661')" class="flex-1 py-2 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 font-semibold text-xs rounded-xl transition-colors">
+      Boys
+    </button>
+    <button onclick="requestUnlock('girls_warden', 'Girls Hostel Warden', '6662')" class="flex-1 py-2 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 font-semibold text-xs rounded-xl transition-colors">
+      Girls
+    </button>
+  </div>
+</div>
+</main>
 
-  <!-- PIN UNLOCK MODAL -->
-  <div id="unlockModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- PIN MODAL -->
+  <div id="unlockModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-5">
-      <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold">🔒</div>
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl font-bold">🔒</div>
       <div>
-        <h3 id="unlockModalTitle" class="text-lg font-bold text-slate-900">Security PIN Verification</h3>
-        <p class="text-xs text-slate-500 mt-1">Enter authorized 4-digit code</p>
+        <h3 id="unlockModalTitle" class="text-base font-bold text-slate-900">Security Verification</h3>
+        <p class="text-xs text-slate-500 mt-1">Enter authorized PIN</p>
       </div>
-      <input type="password" id="unlockCodeInput" placeholder="Enter PIN" maxlength="6" class="w-full text-center text-xl tracking-widest font-mono py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
+      <input type="password" id="unlockCodeInput" placeholder="Enter PIN" maxlength="6" class="w-full text-center text-xl tracking-widest font-mono py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-red-600">
       <div class="flex gap-2">
         <button onclick="closeUnlockModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-semibold text-slate-600">Cancel</button>
-        <button onclick="verifyUnlockCode()" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow">Unlock</button>
+        <button onclick="verifyUnlockCode()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow">Unlock</button>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 2: LOGIN / REGISTER -->
-  <div id="authScreen" class="hidden max-w-md w-full mx-auto my-auto space-y-6">
+  <!-- SCREEN 2: AUTH -->
+  <div id="authScreen" class="hidden max-w-md w-full mx-auto my-auto space-y-5 glass-panel p-6 rounded-3xl border border-white/50">
     <div class="flex items-center justify-between">
-      <button onclick="backToPortals()" class="text-xs font-bold text-blue-600 hover:underline">← Change Role</button>
-      <span id="activeRoleBadge" class="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-xs font-bold uppercase"></span>
+      <button onclick="backToPortals()" class="text-xs font-bold text-red-700 bg-white/50 px-2 py-1 rounded hover:bg-white transition">← Back to Hub</button>
+      <span id="activeRoleBadge" class="px-3 py-1 bg-red-100 border border-red-300 text-red-800 rounded-full text-xs font-bold uppercase shadow-sm"></span>
     </div>
 
     <div class="flex bg-slate-200/80 p-1 rounded-2xl">
@@ -105,22 +187,47 @@
       <button onclick="toggleAuth(false)" id="tabRegister" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900">Register</button>
     </div>
 
-    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4">
+    <div id="duplicateRoleAlert" class="hidden p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl text-xs font-medium leading-relaxed"></div>
+
+    <div class="bg-white/80 border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
       <div id="nameField" class="hidden">
         <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Full Name</label>
-        <input type="text" id="userName" placeholder="Your Name" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none">
+        <input type="text" id="userName" placeholder="Your Official Name" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none">
       </div>
 
+      <!-- STUDENT YEAR FIELD -->
+      <div id="studentYearField" class="hidden">
+        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Academic Year</label>
+        <select id="userAcademicYear" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold">
+          <option value="I Year">I Year (First Year)</option>
+          <option value="II Year">II Year (Second Year)</option>
+          <option value="III Year" selected>III Year (Third Year)</option>
+          <option value="IV Year">IV Year (Final Year)</option>
+        </select>
+      </div>
+      <!-- ACCOMMODATION TYPE FIELD -->
+            <div id="accommodationField" class="hidden">
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Accommodation Type</label>
+              <select id="userAccommodation" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold">
+                <option value="Day Scholar" selected>Day Scholar</option>
+                <option value="Hosteler">Hosteler</option>
+              </select>
+            </div>
+
       <div id="academicDetails" class="hidden grid grid-cols-2 gap-2">
-        <div>
+        <div id="deptContainer">
           <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Department</label>
-          <select id="userDept" class="w-full px-2 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
-            <option value="CSE">CSE</option><option value="ECE">ECE</option><option value="MECH">MECH</option><option value="IT">IT</option><option value="CIVIL">CIVIL</option><option value="AI&DS">AI&DS</option>
+          <select id="userDept" onchange="checkRoleAvailability()" class="w-full px-2 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold">
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="MECH">MECH</option>
+            <option value="IT">IT</option>
+            <option value="AI&DS">AI&DS</option>
           </select>
         </div>
         <div id="sectionContainer">
           <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Section</label>
-          <select id="userYearSec" class="w-full px-2 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+          <select id="userYearSec" onchange="checkRoleAvailability()" class="w-full px-2 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold">
             <option value="A">Section A</option>
             <option value="B">Section B</option>
             <option value="C">Section C</option>
@@ -129,71 +236,89 @@
         </div>
       </div>
 
-      <!-- COUNSELOR ROLL RANGE REGISTRATION (Shows only for Counselor during Register) -->
-      <div id="counselorRollRangeContainer" class="hidden p-3 bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-2">
-        <label class="block text-[10px] font-bold text-emerald-900 uppercase">Assigned Counseling Student Roll Numbers</label>
+      <div id="counselorRollRangeContainer" class="hidden p-3 bg-emerald-50/70 border border-emerald-200 rounded-2xl space-y-2">
+        <label class="block text-[10px] font-bold text-emerald-900 uppercase">Assigned Counseling Roll Number Range</label>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-[9px] font-bold text-slate-500 uppercase">Starting Roll No</label>
-            <input type="text" id="userStartRoll" placeholder="e.g. 110324104001" class="w-full px-2.5 py-1.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono focus:outline-none">
+            <input type="text" id="userStartRoll" oninput="checkRoleAvailability()" placeholder="e.g. 110324104001" class="w-full px-2.5 py-1.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono focus:outline-none">
           </div>
           <div>
             <label class="block text-[9px] font-bold text-slate-500 uppercase">Ending Roll No</label>
-            <input type="text" id="userEndRoll" placeholder="e.g. 110324104020" class="w-full px-2.5 py-1.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono focus:outline-none">
+            <input type="text" id="userEndRoll" oninput="checkRoleAvailability()" placeholder="e.g. 110324104020" class="w-full px-2.5 py-1.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono focus:outline-none">
           </div>
         </div>
-        <p class="text-[9px] text-emerald-700 font-medium">Students within this range will route directly to your portal.</p>
       </div>
 
       <div>
         <label id="userIdLabel" class="block text-xs font-bold text-slate-600 uppercase mb-1">Student Roll Number</label>
-        <input type="text" id="userId" placeholder="Enter Roll Number" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none">
+        <input type="text" id="userId" placeholder="Enter Roll Number" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-mono focus:outline-none">
       </div>
 
       <div>
         <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Password</label>
-        <input type="password" id="userPass" placeholder="••••••••" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none">
+        <input type="password" id="userPass" placeholder="••••••••" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none">
       </div>
 
-      <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow">Login</button>
+      <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs shadow-md transition">Login</button>
     </div>
   </div>
 
-  <!-- SCREEN 3: WORKING DASHBOARDS -->
+  <!-- SCREEN 3: WORKING DASHBOARD -->
   <div id="dashScreen" class="hidden max-w-7xl w-full mx-auto my-auto space-y-6">
-    
-    <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+    <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
       <div>
         <h3 id="dashGreeting" class="text-base font-bold text-slate-900">Welcome</h3>
-        <p id="dashRoleSubtitle" class="text-xs text-blue-600 font-semibold"></p>
+        <p id="dashRoleSubtitle" class="text-xs text-red-700 font-bold uppercase"></p>
       </div>
 
-      <div class="flex items-center gap-3">
-        <button id="topBulkPdfBtn" onclick="downloadMasterPDF()" class="hidden px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
-          <span>📥 Download Jurisdiction Records (PDF)</span>
+      <div class="flex items-center flex-wrap gap-2">
+        <button id="topBulkPdfBtn" onclick="downloadMasterPDF()" class="hidden px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5">
+          <span>📊 Master Audit (PDF)</span>
         </button>
-        <button onclick="logout()" class="px-4 py-2 bg-slate-100 hover:bg-red-50 hover:text-red-600 rounded-xl text-xs font-bold text-slate-600">Exit Dashboard</button>
+        <button id="topBulkLettersBtn" onclick="downloadAllCompleteLettersPDF()" class="hidden px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5">
+          <span>📑 Download All Letters (PDF)</span>
+        </button>
+        <button onclick="logout()" class="px-4 py-2 bg-white hover:bg-red-50 hover:text-red-600 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-sm transition">Exit Dashboard</button>
       </div>
     </div>
+<!-- 6. BOYS HOSTEL WARDEN DASHBOARD -->
+<div id="boys_wardenDashboard" class="hidden space-y-6">
+  <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-base font-bold text-slate-800 mb-4">Boys Hostel Warden Approval Queue</h2>
+    <div id="boysWardenQueue" class="overflow-x-auto">
+      <!-- Boys warden passes injected dynamically -->
+    </div>
+  </div>
+</div>
 
+<!-- 7. GIRLS HOSTEL WARDEN DASHBOARD -->
+<div id="girls_wardenDashboard" class="hidden space-y-6">
+  <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-base font-bold text-slate-800 mb-4">Girls Hostel Warden Approval Queue</h2>
+    <div id="girlsWardenQueue" class="overflow-x-auto">
+      <!-- Girls warden passes injected dynamically -->
+    </div>
+  </div>
+</div>
     <div id="roleDashboardContent"></div>
 
     <!-- STUDENT VIEW -->
-    <div id="studentPersonalView" class="hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+    <div id="studentPersonalView" class="hidden glass-panel border border-white/50 rounded-3xl p-6 shadow-md space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
         <h4 class="font-bold text-slate-900 text-sm">Your Leave Applications & Live Sign-Off Status</h4>
         <button onclick="loadStudentPersonalStatus()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600">🔄 Refresh</button>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+        <table class="w-full text-left text-xs bg-white rounded-xl overflow-hidden shadow-sm">
+          <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
             <tr>
-              <th class="p-3">Application Date</th>
-              <th class="p-3">Reason & Formal Letter</th>
+              <th class="p-3">Applied Timestamp (IST)</th>
+              <th class="p-3">Standing & Reason</th>
               <th class="p-3">Institutional Clearances</th>
               <th class="p-3">Gate Pass Validity</th>
-              <th class="p-3">Campus Exit Status</th>
-              <th class="p-3 text-right">PDF</th>
+              <th class="p-3">Campus Exit</th>
+              <th class="p-3 text-right">Official Downloads</th>
             </tr>
           </thead>
           <tbody id="studentPersonalBody" class="divide-y divide-slate-100">
@@ -203,58 +328,59 @@
       </div>
     </div>
 
-    <!-- AUTHORITY VIEW (STRICTLY SCOPED TO THIS ROLE) -->
-    <div id="authorityLogsView" class="hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-      <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 gap-2">
+    <!-- AUTHORITY LOGS VIEW -->
+    <div id="authorityLogsView" class="hidden glass-panel border border-white/50 rounded-3xl p-6 shadow-md space-y-4">
+      <div class="flex flex-wrap items-center justify-between border-b border-slate-200 pb-3 gap-2">
         <div>
           <h4 id="logsTitle" class="font-bold text-slate-900 text-sm">Authorized Student Outpass Logs</h4>
-          <p id="logsSubtitle" class="text-xs text-slate-400">Restricted strictly to your assigned academic jurisdiction</p>
+          <p id="logsSubtitle" class="text-xs text-slate-600 font-medium">Detailed Chronological Clearance Records</p>
         </div>
-        <button onclick="loadUniversalLogs()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600">🔄 Refresh</button>
+        <button onclick="refreshAllAuthorityViews()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600 shadow-sm">🔄 Refresh All</button>
       </div>
       
       <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+        <table class="w-full text-left text-xs bg-white rounded-xl overflow-hidden shadow-sm min-w-[900px]">
+          <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
             <tr>
-              <th class="p-3">Roll No & Student</th>
-              <th class="p-3">Class & Section</th>
-              <th class="p-3">Contact & Address</th>
-              <th class="p-3">Reason & Formal Letter</th>
-              <th class="p-3">Parent Verification</th>
-              <th class="p-3">Approval Chain</th>
-              <th class="p-3">Approved & Valid</th>
-              <th class="p-3">Exit Status & Timer</th>
-              <th class="p-3 text-right">PDF</th>
+              <th class="p-3">Roll & Name</th>
+              <th class="p-3">Standing & Section</th>
+              <th class="p-3">Contacts</th>
+              <th class="p-3">Reason & Letter</th>
+              <th class="p-3">Timestamp Audit Trail</th>
+              <th class="p-3">Status</th>
+              <th class="p-3 text-right">PDF Actions</th>
             </tr>
           </thead>
           <tbody id="universalLogsBody" class="divide-y divide-slate-100">
-            <tr><td colspan="9" class="p-4 text-center text-slate-400">Loading records...</td></tr>
+            <tr><td colspan="7" class="p-4 text-center text-slate-400">Loading records...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: VIEW FORMAL LETTER -->
-  <div id="letterModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- FORMAL LETTER MODAL -->
+  <div id="letterModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-2xl border border-slate-100 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center gap-2">
           <span class="text-xl">📄</span>
-          <h3 class="text-sm font-bold text-slate-900">Institutional Leave Requisition Letter</h3>
+          <h3 class="text-sm font-bold text-slate-900">GRTIET Formal Leave Requisition</h3>
         </div>
         <button onclick="closeLetterModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
       </div>
       <pre id="letterModalContent" class="whitespace-pre-wrap font-mono text-xs text-slate-700 bg-slate-50 p-4 rounded-2xl border border-slate-200 leading-relaxed"></pre>
-      <div class="text-right">
-        <button onclick="closeLetterModal()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow">Done</button>
+      <div class="flex justify-end gap-2">
+        <button id="modalDownloadLetterBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow">Download Letter PDF</button>
+        <button onclick="closeLetterModal()" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow">Done</button>
       </div>
     </div>
   </div>
 
-  <footer class="max-w-7xl w-full mx-auto text-center pt-6 border-t border-slate-200 text-xs text-slate-500">
-    GateMatrix Institutional Security Grid • Developed by <span class="text-blue-600 font-bold">Surya</span>
+  <!-- FOOTER -->
+  <footer class="max-w-7xl w-full mx-auto text-center pt-6 pb-2 border-t border-white/50 text-[11px] font-bold text-slate-700 space-y-1">
+    <div>GRT Institute of Engineering and Technology • Tiruttani - Chennai Highway, Tiruttani - 631 209</div>
+    <div class="text-slate-600">Autonomous System • Developed by <span class="text-red-700 font-black">Surya</span></div>
   </footer>
 
   <script>
@@ -263,26 +389,51 @@
     let isLoginMode = true;
     let loggedUser = null;
     let masterPassList = [];
+    let currentModalPass = null;
 
+    function formatClassSection(dept, rawSec, academicYear) {
+      const yearStr = academicYear || 'I Year';
+      if (!rawSec) return `${yearStr} • ${dept || 'CSE'} - Sec A`;
+      const match = String(rawSec).trim().toUpperCase().match(/\b([A-D])\b/);
+      const letter = match ? match[1] : 'A';
+      return `${yearStr} • ${dept || 'CSE'} - Sec ${letter}`;
+    }
+// ---> PASTE IT RIGHT HERE:
+function loadWardenPortalData(wardenRole) {
+    const targetGender = wardenRole === 'boys_warden' ? 'Male' : 'Female';
+    const hostelerStudents = allStudents.filter(student => 
+        student.gender === targetGender && student.isHosteler === true
+    );
+    renderStudentTable(hostelerStudents);
+}
     function requestUnlock(role, title, pin) {
-      activeRole = role;
-      requiredPin = pin;
-      document.getElementById('unlockModalTitle').innerText = `${title} Access`;
-      document.getElementById('unlockCodeInput').value = '';
-      document.getElementById('unlockModal').classList.remove('hidden');
-      document.getElementById('unlockCodeInput').focus();
-    }
+    activeRole = role;
+    requiredPin = pin;
+    
+    // 1. THIS HIDES THE ENTIRE MAIN SCREEN (INCLUDING THE WARDEN CARD):
+    document.getElementById('portalSelectionScreen').classList.add('hidden');
+    
+    // 2. This opens your PIN/Login box:
+    document.getElementById('unlockModalTitle').innerText = `${title} Access`;
+    document.getElementById('unlockCodeInput').value = '';
+    document.getElementById('unlockModal').classList.remove('hidden');
+    document.getElementById('unlockCodeInput').focus();
+}
 
-    function closeUnlockModal() {
-      document.getElementById('unlockModal').classList.add('hidden');
-    }
+   function closeUnlockModal() {
+    document.getElementById('unlockModal').classList.add('hidden');
+    
+    // THIS BRINGS THE MAIN SCREEN BACK WHEN YOU GO BACK:
+    document.getElementById('portalSelectionScreen').classList.remove('hidden');
+}
+    
 
     function verifyUnlockCode() {
       if (document.getElementById('unlockCodeInput').value.trim() === requiredPin) {
         closeUnlockModal();
         openAuthScreen();
       } else {
-        alert('❌ Invalid Access Code!');
+        alert('❌ Invalid Access PIN');
       }
     }
 
@@ -295,10 +446,10 @@
       const idInput = document.getElementById('userId');
       if (activeRole === 'student') {
         idLabel.innerText = 'Student Roll Number';
-        idInput.placeholder = 'e.g. 110324104070';
+        idInput.placeholder = 'e.g. 110324104107';
       } else {
-        idLabel.innerText = 'Faculty / Staff ID';
-        idInput.placeholder = 'e.g. STAFF01';
+        idLabel.innerText = 'Staff / Faculty ID';
+        idInput.placeholder = 'e.g. GRT_STAFF01';
       }
       toggleAuth(true);
     }
@@ -308,6 +459,45 @@
       document.getElementById('portalSelectionScreen').classList.remove('hidden');
     }
 
+    async function checkRoleAvailability() {
+      if (isLoginMode) return;
+      if (activeRole === 'student') return;
+
+      const dept = document.getElementById('userDept')?.value || 'CSE';
+      const yearSec = document.getElementById('userYearSec')?.value || 'A';
+      const startRoll = document.getElementById('userStartRoll')?.value.trim() || '';
+      const endRoll = document.getElementById('userEndRoll')?.value.trim() || '';
+      const alertBox = document.getElementById('duplicateRoleAlert');
+      const submitBtn = document.getElementById('authSubmitBtn');
+
+      try {
+        let qUrl = `/api/auth/check-role-exists?role=${encodeURIComponent(activeRole)}&dept=${encodeURIComponent(dept)}&yearSec=${encodeURIComponent(yearSec)}`;
+        if (activeRole === 'counselor' && startRoll && endRoll) {
+          qUrl += `&startRoll=${encodeURIComponent(startRoll)}&endRoll=${encodeURIComponent(endRoll)}`;
+        }
+
+        const res = await fetch(qUrl);
+        const data = await res.json();
+        
+        if (data.exists) {
+          if (activeRole === 'counselor') {
+            alertBox.innerHTML = `⚠️ Ward Conflict: The selected range (${startRoll} to ${endRoll}) overlaps with students already claimed by Counselor <b>${data.conflictCounselor}</b> (${data.registeredRange}). You cannot register these students.`;
+          } else {
+            alertBox.innerHTML = `⚠️ Position Filled: The ${activeRole.toUpperCase()} position is already registered by ${data.registeredName}.`;
+          }
+          alertBox.classList.remove('hidden');
+          submitBtn.disabled = true;
+          submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          alertBox.classList.add('hidden');
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      } catch (err) {
+        console.error('Role check failed:', err);
+      }
+    }
+
     function toggleAuth(login) {
       isLoginMode = login;
       document.getElementById('tabLogin').className = login ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-white text-slate-900 shadow-sm' : 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900';
@@ -315,55 +505,94 @@
       
       document.getElementById('nameField').classList.toggle('hidden', login);
       
-      const showAcademic = !login && (activeRole === 'counselor' || activeRole === 'advisor' || activeRole === 'hod');
-      document.getElementById('academicDetails').classList.toggle('hidden', !showAcademic);
+      const academicDetails = document.getElementById('academicDetails');
+      const sectionContainer = document.getElementById('sectionContainer');
+      const counselorRange = document.getElementById('counselorRollRangeContainer');
+      const studentYearField = document.getElementById('studentYearField');
+      const accommodationField = document.getElementById('accommodationField');
+      const submitBtn = document.getElementById('authSubmitBtn');
 
-      const isAdvisor = !login && activeRole === 'advisor';
-      document.getElementById('sectionContainer').classList.toggle('hidden', !isAdvisor);
+      if (login) {
+        academicDetails.classList.add('hidden');
+        counselorRange.classList.add('hidden');
+        accommodationField.classList.add('hidden');
+        studentYearField.classList.add('hidden');
+        document.getElementById('duplicateRoleAlert').classList.add('hidden');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        accommodationField.classList.toggle('hidden', activeRole !== 'student');
+        studentYearField.classList.toggle('hidden', activeRole !== 'student');
+        if (activeRole === 'principal' || activeRole === 'boys_warden' || activeRole === 'girls_warden') {
+  academicDetails.classList.add('hidden');
+}
+       else {
+          academicDetails.classList.remove('hidden');
+          sectionContainer.classList.toggle('hidden', activeRole === 'hod');
+        }
+        counselorRange.classList.toggle('hidden', activeRole !== 'counselor');
+        checkRoleAvailability();
+      }
 
-      // Show Counselor Start-End Roll Range inputs only during Counselor registration
-      const isCounselorRegister = !login && activeRole === 'counselor';
-      document.getElementById('counselorRollRangeContainer').classList.toggle('hidden', !isCounselorRegister);
-
-      document.getElementById('authSubmitBtn').innerText = login ? `Login as ${activeRole.toUpperCase()}` : `Register as ${activeRole.toUpperCase()}`;
+      submitBtn.innerText = login ? `Login as ${activeRole.toUpperCase()}` : `Register as ${activeRole.toUpperCase()}`;
     }
 
     async function handleAuthSubmit() {
       const userId = document.getElementById('userId').value.trim();
       const password = document.getElementById('userPass').value.trim();
-      if (!userId || !password) return alert('Enter ID and password.');
+      if (!userId || !password) return alert('Please enter ID and password.');
 
       if (isLoginMode) {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, password })
-        });
-        const data = await res.json();
-        if (data.success) {
-          if (data.user.role !== activeRole) return alert(`This account belongs to ${data.user.role.toUpperCase()}, not ${activeRole.toUpperCase()}.`);
-          loggedUser = data.user;
-          openDashboard(data.user);
-        } else alert(data.message);
+        try {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, password })
+          });
+          const data = await res.json();
+          if (data.success) {
+            if (data.user.role !== activeRole) return alert(`This account belongs to ${data.user.role.toUpperCase()}, not ${activeRole.toUpperCase()}.`);
+            loggedUser = data.user;
+            openDashboard(data.user);
+        if (activeRole === 'boys_warden') {
+            document.getElementById('boysWardenPortalView').classList.remove('hidden');
+            loadWardenPortalData('boys_warden');
+        } else if (activeRole === 'girls_warden') {
+            document.getElementById('girlsWardenPortalView').classList.remove('hidden');
+            loadWardenPortalData('girls_warden');
+        }
+
+          } else alert(data.message || 'Login failed.');
+        } catch (err) {
+          alert('Network connection error.');
+        }
       } else {
+        const accommodation = document.getElementById('userAccommodation')?.value || 'Day Scholar';
         const name = document.getElementById('userName').value.trim();
+        const academicYear = document.getElementById('userAcademicYear')?.value || 'I Year';
         const dept = document.getElementById('userDept')?.value || 'CSE';
         const yearSec = document.getElementById('userYearSec')?.value || 'A';
         const startRoll = document.getElementById('userStartRoll')?.value.trim() || '';
         const endRoll = document.getElementById('userEndRoll')?.value.trim() || '';
 
+        if (!name) return alert('Full name is required.');
         if (activeRole === 'counselor' && (!startRoll || !endRoll)) {
-          return alert('Please enter both Starting Roll Number and Ending Roll Number for your counseling batch.');
+          return alert('Please specify both Starting and Ending Roll numbers for counseling ward.');
         }
 
-        const res = await fetch('/api/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, password, name, role: activeRole, dept, yearSec, startRoll, endRoll })
-        });
-        const data = await res.json();
-        alert(data.message);
-        if (data.success) toggleAuth(true);
+        try {
+          const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+  userId, password, name, role: activeRole, academicYear, accommodation, dept, yearSec, startRoll, endRoll, pin: requiredPin
+})  });
+          const data = await res.json();
+          alert(data.message);
+          if (data.success) toggleAuth(true);
+        } catch (err) {
+          alert('Registration request failed.');
+        }
       }
     }
 
@@ -372,89 +601,95 @@
       document.getElementById('dashScreen').classList.remove('hidden');
       document.getElementById('dashGreeting').innerText = `Welcome, ${user.name}`;
 
-      if (user.role === 'principal') {
-        document.getElementById('dashRoleSubtitle').innerText = `EXECUTIVE CLEARANCE • College-Wide Administration (All Departments)`;
-      } else if (user.role === 'hod') {
-        document.getElementById('dashRoleSubtitle').innerText = `DEPARTMENT HOD • ${user.dept} Department (All Sections)`;
-      } else if (user.role === 'advisor') {
-        document.getElementById('dashRoleSubtitle').innerText = `CLASS ADVISOR • ${user.dept} - Section ${user.yearSec}`;
-      } else if (user.role === 'counselor') {
-        document.getElementById('dashRoleSubtitle').innerText = `CLASS COUNSELOR • Assigned Range: ${user.startRoll || 'Start'} to ${user.endRoll || 'End'}`;
-      } else {
-        document.getElementById('dashRoleSubtitle').innerText = `STUDENT • Dept: ${user.dept || 'Engineering'}`;
-      }
+      const subtitles = {
+        principal: 'EXECUTIVE DIRECTORATE • GRTIET Institution-Wide Clearance',
+        hod: `HEAD OF DEPARTMENT • Department of ${user.dept}`,
+        advisor: `CLASS ADVISOR • ${user.academicYear || 'I Year'} - ${user.dept} Sec ${user.yearSec}`,
+        counselor: `CLASS COUNSELOR • Assigned Ward (${user.startRoll || 'Start'} to ${user.endRoll || 'End'})`,
+        student: `STUDENT • ${user.academicYear || 'I Year'} • Dept: ${user.dept || 'Engineering'} - Sec ${user.yearSec || 'A'}`
+      };
+      document.getElementById('dashRoleSubtitle').innerText = subtitles[user.role] || '';
 
       const topPdfBtn = document.getElementById('topBulkPdfBtn');
+      const topBulkLettersBtn = document.getElementById('topBulkLettersBtn');
       const studentView = document.getElementById('studentPersonalView');
       const authorityView = document.getElementById('authorityLogsView');
       const content = document.getElementById('roleDashboardContent');
 
       if (user.role === 'student') {
         topPdfBtn.classList.add('hidden');
+        topBulkLettersBtn.classList.add('hidden');
         studentView.classList.remove('hidden');
         authorityView.classList.add('hidden');
 
         content.innerHTML = `
-          <div class="bg-white border border-slate-200 rounded-3xl p-6 space-y-4 shadow-sm max-w-lg mx-auto">
-            <h4 class="font-bold text-slate-800 text-sm">Apply for Outpass / Leave</h4>
-            <p class="text-xs text-slate-500">State your reason below. The engine will automatically formulate a formal application letter addressed to the Principal.</p>
-            <textarea id="passReason" rows="3" placeholder="State your exact reason for outpass..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none"></textarea>
-            <button onclick="submitStudentPass('${user.userId}')" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs">Generate Letter & Submit</button>
+          <div class="glass-panel border border-white/50 rounded-3xl p-6 space-y-4 shadow-md max-w-lg mx-auto">
+            <h4 class="font-bold text-slate-800 text-sm">Apply for Institutional Gate Pass</h4>
+            <p class="text-xs text-slate-600">Standing: <span class="font-bold text-red-600">${user.academicYear || 'I Year'}</span> | Sec: <span class="font-bold text-red-600">${user.yearSec || 'A'}</span></p>
+            <textarea id="passReason" rows="3" placeholder="Enter reason (e.g. Medical emergency, urgent paper presentation, family event)..." class="w-full p-3 bg-white border border-slate-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+            <button onclick="submitStudentPass('${user.userId}')" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs shadow-md transition">Draft Official Letter & Submit</button>
           </div>
         `;
         loadStudentPersonalStatus();
       } else {
         topPdfBtn.classList.remove('hidden');
+        topBulkLettersBtn.classList.remove('hidden');
         studentView.classList.add('hidden');
         authorityView.classList.remove('hidden');
 
         if (user.role === 'counselor') {
           content.innerHTML = `
             <div class="space-y-6">
-              <!-- Counselor Info & Range Card -->
-              <div class="bg-emerald-50/70 border border-emerald-200 rounded-3xl p-5 shadow-sm flex flex-wrap justify-between items-center gap-4">
+              <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-sm flex flex-wrap justify-between items-center gap-4">
                 <div>
-                  <h4 class="font-bold text-emerald-900 text-sm">Counselor Ward Jurisdiction</h4>
-                  <p class="text-xs text-emerald-700 mt-0.5">Assigned Students: <span class="font-mono font-bold bg-white px-2 py-0.5 rounded border border-emerald-300">${user.startRoll || 'Not Set'}</span> to <span class="font-mono font-bold bg-white px-2 py-0.5 rounded border border-emerald-300">${user.endRoll || 'Not Set'}</span></p>
+                  <h4 class="font-bold text-slate-900 text-sm">Counseling Ward Jurisdiction</h4>
+                  <p class="text-xs text-slate-700 mt-0.5">Assigned Ward: <span class="font-mono font-bold bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300 text-emerald-800">${user.startRoll || 'Start'}</span> to <span class="font-mono font-bold bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300 text-emerald-800">${user.endRoll || 'End'}</span></p>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs text-slate-500">Upload Excel Roster:</span>
-                  <input type="file" id="counselorFile" accept=".xlsx,.xls,.csv" onchange="uploadCounselorExcel()" class="text-xs">
-                </div>
+                <form onsubmit="uploadCounselorExcel(event)" class="mb-0">
+                  <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border">
+                    <span class="text-xs text-slate-500 font-bold">Import Student Batch:</span>
+                    <input type="file" id="counselorFile" accept=".xlsx, .xls, .csv" class="text-xs" required />
+                    <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded text-xs font-bold">Import</button>
+                  </div>
+                </form>
               </div>
 
-              <!-- Pending Approval Queue -->
-              <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
+              <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-md space-y-4">
                 <h4 class="font-bold text-slate-800 text-sm">Counselor Queue: Parent Phone Call Verification</h4>
-                <div id="counselorQueue"></div>
+                <div class="overflow-x-auto">
+                  <div id="counselorQueue"></div>
+                </div>
               </div>
             </div>
           `;
           fetchCounselorQueue();
         } else if (user.role === 'advisor') {
           content.innerHTML = `
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-              <h4 class="font-bold text-slate-800 text-sm">Class Advisor Review Queue (${user.dept} - Section ${user.yearSec} Only)</h4>
-              <p class="text-xs text-slate-400">Strictly displaying students of your department and section.</p>
-              <div id="advisorQueue"></div>
+            <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-md space-y-4">
+              <h4 class="font-bold text-slate-800 text-sm">Class Advisor Review Queue (${user.dept} - Section ${user.yearSec})</h4>
+              <div class="overflow-x-auto">
+                <div id="advisorQueue"></div>
+              </div>
             </div>
           `;
           fetchAdvisorQueue();
         } else if (user.role === 'hod') {
           content.innerHTML = `
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-              <h4 class="font-bold text-slate-800 text-sm">Department HOD Review Queue (${user.dept} Department Only)</h4>
-              <p class="text-xs text-slate-400">Verifies Counselor and Class Advisor dual authorization across all ${user.dept} sections.</p>
-              <div id="hodQueue"></div>
+            <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-md space-y-4">
+              <h4 class="font-bold text-slate-800 text-sm">Head of Department Queue (${user.dept} Department)</h4>
+              <div class="overflow-x-auto">
+                <div id="hodQueue"></div>
+              </div>
             </div>
           `;
           fetchHODQueue();
         } else if (user.role === 'principal') {
           content.innerHTML = `
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
+            <div class="glass-panel border border-white/50 rounded-3xl p-5 shadow-md space-y-4">
               <h4 class="font-bold text-slate-800 text-sm">Principal Final Clearance (Activates 20-Min Departure Gate Window)</h4>
-              <p class="text-xs text-slate-400">College-Wide Review across all departments and sections.</p>
-              <div id="principalQueue"></div>
+              <div class="overflow-x-auto">
+                <div id="principalQueue"></div>
+              </div>
             </div>
           `;
           fetchPrincipalQueue();
@@ -464,24 +699,44 @@
       }
     }
 
+    function refreshAllAuthorityViews() {
+      if (!loggedUser) return;
+      loadUniversalLogs();
+      if (loggedUser.role === 'counselor') fetchCounselorQueue();
+      if (loggedUser.role === 'advisor') fetchAdvisorQueue();
+      if (loggedUser.role === 'hod') fetchHODQueue();
+      if (loggedUser.role === 'principal') fetchPrincipalQueue();
+  if (loggedUser.role === 'boys_warden') {
+  document.getElementById('boys_wardenDashboard').classList.remove('hidden');
+  fetchBoysWardenQueue();
+}
+if (loggedUser.role === 'girls_warden') {
+  document.getElementById('girls_wardenDashboard').classList.remove('hidden');
+  fetchGirlsWardenQueue();
+}
+    }
+
     async function submitStudentPass(rollNo) {
       const reason = document.getElementById('passReason').value.trim();
-      if (!reason) return alert('Please enter a reason.');
+      if (!reason) return alert('Please state your outpass reason.');
 
-      const res = await fetch('/api/apply-pass', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rollNo, reason })
-      });
-      const data = await res.json();
-      alert(data.message);
-      if (data.success) {
-        document.getElementById('passReason').value = '';
-        loadStudentPersonalStatus();
+      try {
+        const res = await fetch('/api/apply-pass', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rollNo, reason })
+        });
+        const data = await res.json();
+        alert(data.message);
+        if (data.success) {
+          document.getElementById('passReason').value = '';
+          loadStudentPersonalStatus();
+        }
+      } catch (err) {
+        alert('Failed to submit outpass requisition.');
       }
     }
 
-    // STUDENT PERSONAL VIEW
     async function loadStudentPersonalStatus() {
       const tbody = document.getElementById('studentPersonalBody');
       if (!tbody || !loggedUser) return;
@@ -491,29 +746,30 @@
         const passes = await res.json();
 
         if (!passes || passes.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">You have no active pass applications.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">You have no active pass requisitions.</td></tr>`;
           return;
         }
 
         tbody.innerHTML = passes.map(p => `
-          <tr class="hover:bg-slate-50 transition">
-            <td class="p-3 font-mono text-slate-500">${new Date(p.createdAt).toLocaleDateString()}</td>
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100 last:border-0">
+            <td class="p-3 font-mono text-slate-600 font-bold">${p.appliedTime || new Date(p.createdAt).toLocaleString('en-IN')}</td>
             <td class="p-3">
-              <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-              <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                📄 View Full AI Letter
+              <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 font-bold text-[10px] rounded mb-1">${p.academicYear || 'I Year'}</span>
+              <div class="font-bold text-slate-800 text-[11px]">"${escapeHtml(p.reason)}"</div>
+              <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100 mt-1">
+                📄 View Letter
               </button>
             </td>
             <td class="p-3">
               <div class="flex flex-wrap gap-1">
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.counselorApproval?.approved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}">
-                  ${p.counselorApproval?.approved ? '✓ Counselor' : '⏳ Counselor'}
+                  ${p.counselorApproval?.approved ? '✓ Counselor (' + (p.counselorApproval.counselorName || 'Verified') + ')' : '⏳ Counselor'}
                 </span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.advisorApproval?.approved ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-100 text-slate-400'}">
-                  ${p.advisorApproval?.approved ? '✓ Advisor' : '⏳ Advisor'}
+                  ${p.advisorApproval?.approved ? '✓ Advisor (' + (p.advisorApproval.advisorName || 'Approved') + ')' : '⏳ Advisor'}
                 </span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.hodApproval?.approved ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-400'}">
-                  ${p.hodApproval?.approved ? '✓ HOD' : '⏳ HOD'}
+                  ${p.hodApproval?.approved ? '✓ HOD (' + (p.hodApproval.hodName || 'Authorized') + ')' : '⏳ HOD'}
                 </span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.principalApproval?.approved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}">
                   ${p.principalApproval?.approved ? '✓ Principal' : '⏳ Principal'}
@@ -525,161 +781,186 @@
             </td>
             <td class="p-3">
               <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold ${p.exitStatus === 'Exited Campus' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-                ${p.exitStatus === 'Exited Campus' ? '🚪 EXITED (' + p.exitTime + ')' : '🏫 INSIDE CAMPUS'}
+                ${p.exitStatus === 'Exited Campus' ? '🚪 EXITED (' + (p.exitTime || 'Recorded') + ')' : '🏫 INSIDE CAMPUS'}
               </span>
             </td>
-            <td class="p-3 text-right">
-              <button onclick='downloadSinglePassPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded text-xs font-bold">
-                PDF
+            <td class="p-3 text-right space-x-1">
+              <button onclick='downloadSinglePassPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-red-50 text-red-700 border border-red-200 rounded text-xs font-bold hover:bg-red-100 shadow-sm">
+                Pass Slip
+              </button>
+              <button onclick='downloadOfficialLetterOnlyPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded text-xs font-bold hover:bg-indigo-100 shadow-sm">
+                Letter PDF
               </button>
             </td>
           </tr>
         `).join('');
-      } catch (err) {}
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-rose-500">Failed to load personal passes.</td></tr>`;
+      }
     }
 
-    // 1. COUNSELOR QUEUE: Matched by Start-to-End Roll range OR Counselor name
+    // 1. COUNSELOR VIEW
     async function fetchCounselorQueue() {
-      const res = await fetch(`/api/passes?status=Pending Counselor&role=counselor&counselorName=${encodeURIComponent(loggedUser.name)}&startRoll=${encodeURIComponent(loggedUser.startRoll || '')}&endRoll=${encodeURIComponent(loggedUser.endRoll || '')}`);
-      const passes = await res.json();
       const el = document.getElementById('counselorQueue');
+      if (!el || !loggedUser) return;
 
-      if (!passes || passes.length === 0) {
-        el.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No student passes pending your verification in roll range ${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'}.</div>`;
-        return;
-      }
+      try {
+        const res = await fetch(`/api/passes?status=Pending Counselor&role=counselor&counselorName=${encodeURIComponent(loggedUser.name)}&startRoll=${encodeURIComponent(loggedUser.startRoll || '')}&endRoll=${encodeURIComponent(loggedUser.endRoll || '')}`);
+        const passes = await res.json();
 
-      el.innerHTML = `
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-            <tr>
-              <th class="p-3">Roll & Name</th>
-              <th class="p-3">Parent Phone</th>
-              <th class="p-3">Reason & Formal Letter</th>
-              <th class="p-3">Verification Check</th>
-              <th class="p-3 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100">
-            ${passes.map(p => `
+        if (!passes || passes.length === 0) {
+          el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl">No student passes pending verification in range ${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'}.</div>`;
+          return;
+        }
+
+        el.innerHTML = `
+          <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
               <tr>
-                <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name} (${p.dept} - ${p.yearSec})</span></td>
-                <td class="p-3">
-                  <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold hover:bg-emerald-100">
-                    📞 ${p.parentContact}
-                  </a>
-                </td>
-                <td class="p-3">
-                  <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-                  <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                    📄 View Full AI Letter
-                  </button>
-                </td>
-                <td class="p-3">
-                  <label class="inline-flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="callCheck_${p._id}" class="w-4 h-4 text-blue-600 rounded">
-                    <span class="text-[11px] font-semibold text-slate-700">Spoke with Parent</span>
-                  </label>
-                </td>
-                <td class="p-3 text-right">
-                  <button onclick="verifyCounselorPass('${p._id}')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm">
-                    Confirm & Forward ➔
-                  </button>
-                </td>
+                <th class="p-3">Roll & Name</th>
+                <th class="p-3">Student Standing</th>
+                <th class="p-3">Applied Timestamp</th>
+                <th class="p-3">Parent Phone</th>
+                <th class="p-3">Reason & Letter</th>
+                <th class="p-3">Verification Check</th>
+                <th class="p-3 text-right">Action</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${passes.map(p => `
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
+                  <td class="p-3 font-bold text-red-700">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</td>
+                  <td class="p-3 font-mono text-[11px] text-indigo-900 font-semibold bg-indigo-50/50">⏱️ ${p.appliedTime || '-'}</td>
+                  <td class="p-3">
+                    <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold hover:bg-emerald-100">
+                      📞 ${p.parentContact || 'N/A'}
+                    </a>
+                  </td>
+                  <td class="p-3">
+                    <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
+                    <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
+                      📄 View Full Letter
+                    </button>
+                  </td>
+                  <td class="p-3">
+                    <label class="inline-flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                      <input type="checkbox" id="callCheck_${p._id}" class="w-4 h-4 text-emerald-600 rounded">
+                      <span class="text-[11px] font-bold text-slate-700">I talked to their parents</span>
+                    </label>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="verifyCounselorPass('${p._id}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow whitespace-nowrap transition active:scale-95">
+                      Confirm & Forward ➔
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load counselor queue.</div>`;
+      }
     }
 
     async function verifyCounselorPass(passId) {
-      const isCalled = document.getElementById(`callCheck_${passId}`)?.checked;
-      if (!isCalled) {
-        if (!confirm("Did you call the parents to verify this outpass?")) return;
+      const isChecked = document.getElementById(`callCheck_${passId}`)?.checked;
+      if (!isChecked) {
+        return alert("Please check the 'I talked to their parents' box before confirming.");
       }
+
       const res = await fetch('/api/approve/counselor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passId, parentCalled: !!isCalled, counselorName: loggedUser.name })
+        body: JSON.stringify({ passId, parentCalled: true, counselorName: loggedUser.name })
       });
       const data = await res.json();
       alert(data.message);
-      fetchCounselorQueue();
-      loadUniversalLogs();
+      refreshAllAuthorityViews();
     }
 
-    // 2. CLASS ADVISOR QUEUE: Department & Section only (e.g. CSE-A)
+    // 2. ADVISOR VIEW
     async function fetchAdvisorQueue() {
-      const res = await fetch(`/api/passes?status=Pending Advisor&role=advisor&dept=${encodeURIComponent(loggedUser.dept)}&yearSec=${encodeURIComponent(loggedUser.yearSec)}`);
-      const passes = await res.json();
       const el = document.getElementById('advisorQueue');
+      if (!el || !loggedUser) return;
 
-      if (!passes || passes.length === 0) {
-        el.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No requests pending Class Advisor review for ${loggedUser.dept} Section ${loggedUser.yearSec}.</div>`;
-        return;
-      }
+      try {
+        const res = await fetch(`/api/passes?status=Pending Advisor&role=advisor&dept=${encodeURIComponent(loggedUser.dept)}&yearSec=${encodeURIComponent(loggedUser.yearSec)}`);
+        const passes = await res.json();
 
-      el.innerHTML = `
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-            <tr>
-              <th class="p-3">Roll & Name</th>
-              <th class="p-3">Parent Contact</th>
-              <th class="p-3">Reason & Formal Letter</th>
-              <th class="p-3">Counselor Verification</th>
-              <th class="p-3 text-right">Advisor Action</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100">
-            ${passes.map(p => `
+        if (!passes || passes.length === 0) {
+          el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl border border-slate-200">No requests pending Class Advisor review for ${loggedUser.dept} - Section ${loggedUser.yearSec}.</div>`;
+          return;
+        }
+        el.innerHTML = `
+          <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
               <tr>
-                <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
-                <td class="p-3">
-                  <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold">
-                    📞 ${p.parentContact}
-                  </a>
-                </td>
-                <td class="p-3">
-                  <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-                  <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                    📄 View Full AI Letter
-                  </button>
-                </td>
-                <td class="p-3">
-                  ${p.parentCallVerified ? `
-                    <span class="px-2 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                      ✓ ${p.parentCalledBy} (${p.parentCallTime})
-                    </span>
-                  ` : `
-                    <div class="space-y-1">
-                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">⚠️ Counselor Not Verified</span>
-                      <label class="flex items-center gap-1 cursor-pointer">
-                        <input type="checkbox" id="advisorCallFallback_${p._id}" class="w-3.5 h-3.5">
-                        <span class="text-[10px] text-slate-600 font-bold">I called parent (Counselor Absent)</span>
-                      </label>
-                    </div>
-                  `}
-                </td>
-                <td class="p-3 text-right">
-                  <button onclick="approveAdvisorPass('${p._id}', ${p.parentCallVerified})" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm">
-                    Approve ➔ HOD
-                  </button>
-                </td>
+                <th class="p-3">Roll & Name</th>
+                <th class="p-3">Student Standing</th>
+                <th class="p-3">Audit Timeline (IST)</th>
+                <th class="p-3">Parent Contact</th>
+                <th class="p-3">Reason & Letter</th>
+                <th class="p-3">Counselor Check</th>
+                <th class="p-3 text-right">Action</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${passes.map(p => `
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
+                  <td class="p-3 font-bold text-red-700">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</td>
+                  <td class="p-3 font-mono text-[10px] space-y-1 bg-slate-50 p-2 rounded">
+                    <div><b>1. Applied:</b> ${p.appliedTime || '-'}</div>
+                    <div class="text-emerald-700"><b>2. Counselor:</b> ${p.parentCallTime || '-'}</div>
+                  </td>
+                  <td class="p-3">
+                    <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold">
+                      📞 ${p.parentContact || 'N/A'}
+                    </a>
+                  </td>
+                  <td class="p-3">
+                    <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
+                    <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
+                      📄 View Full AI Letter
+                    </button>
+                  </td>
+                  <td class="p-3">
+                    ${p.parentCallVerified ? `
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        ✓ I talked to their parents (Counselor: ${p.counselorApproval?.counselorName || 'Verified'})
+                      </span>
+                    ` : `
+                      <div class="space-y-1 bg-rose-50 p-1.5 rounded-lg border border-rose-200">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 inline-block mb-1">⚠️ Counselor Unverified</span>
+                        <label class="flex items-center gap-1 cursor-pointer">
+                          <input type="checkbox" id="advisorCallFallback_${p._id}" class="w-3.5 h-3.5">
+                          <span class="text-[10px] text-slate-700 font-bold">I talked to their parents</span>
+                        </label>
+                      </div>
+                    `}
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="approveAdvisorPass('${p._id}', ${p.parentCallVerified})" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow whitespace-nowrap transition active:scale-95">
+                      Approve ➔ HOD
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load advisor queue.</div>`;
+      }
     }
 
     async function approveAdvisorPass(passId, wasVerified) {
       let fallback = false;
       if (!wasVerified) {
         fallback = document.getElementById(`advisorCallFallback_${passId}`)?.checked;
-        if (!fallback) {
-          return alert("Cannot forward to HOD! Either Counselor or Class Advisor must call and verify with parents first.");
-        }
+        if (!fallback) return alert("You must check 'I talked to their parents' before forwarding to HOD!");
       }
 
       const res = await fetch('/api/approve/advisor', {
@@ -689,66 +970,84 @@
       });
       const data = await res.json();
       alert(data.message);
-      fetchAdvisorQueue();
-      loadUniversalLogs();
+      refreshAllAuthorityViews();
     }
 
-    // 3. HOD QUEUE: Department only (all sections)
+    // 3. HOD VIEW
     async function fetchHODQueue() {
-      const res = await fetch(`/api/passes?status=Pending HOD&role=hod&dept=${encodeURIComponent(loggedUser.dept)}`);
-      const passes = await res.json();
       const el = document.getElementById('hodQueue');
+      if (!el || !loggedUser) return;
 
-      if (!passes || passes.length === 0) {
-        el.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No requests pending HOD authorization for ${loggedUser.dept} Department.</div>`;
-        return;
-      }
+      try {
+        const res = await fetch(`/api/passes?status=Pending HOD&role=hod&dept=${encodeURIComponent(loggedUser.dept)}`);
+        const passes = await res.json();
 
-      el.innerHTML = `
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-            <tr>
-              <th class="p-3">Roll & Name</th>
-              <th class="p-3">Class & Section</th>
-              <th class="p-3">Reason & Formal Letter</th>
-              <th class="p-3">Prior Approvals</th>
-              <th class="p-3 text-right">HOD Action</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100">
-            ${passes.map(p => `
+        if (!passes || passes.length === 0) {
+          el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl border border-slate-200">No requests pending HOD authorization for ${loggedUser.dept} Department.</div>`;
+          return;
+        }
+
+        el.innerHTML = `
+          <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
               <tr>
-                <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
-                <td class="p-3 font-mono font-bold text-blue-700">${p.dept} - ${p.yearSec}</td>
-                <td class="p-3">
-                  <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-                  <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                    📄 View Full AI Letter
-                  </button>
-                </td>
-                <td class="p-3">
-                  <div class="space-y-1">
-                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                      ✓ ${p.parentCalledBy}
-                    </span><br>
-                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800">
-                      ✓ Advisor: ${p.advisorApproval?.advisorName || 'Approved'} (${p.advisorApproval?.time || '-'})
-                    </span>
-                  </div>
-                </td>
-                <td class="p-3 text-right">
-                  <button onclick="approveGenericPass('${p._id}', '/api/approve/hod')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-sm">
-                    Authorize ➔ Principal
-                  </button>
-                </td>
+                <th class="p-3">Roll & Name</th>
+                <th class="p-3">Student Standing</th>
+                <th class="p-3">Audit Timeline (IST)</th>
+                <th class="p-3">Reason & Letter</th>
+                <th class="p-3">Endorsements</th>
+                <th class="p-3 text-right">Action</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${passes.map(p => `
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
+                  <td class="p-3 font-mono font-bold text-red-700">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</td>
+                  <td class="p-3 font-mono text-[10px] space-y-1 bg-slate-50 p-2 rounded">
+                    <div><b>1. Applied:</b> ${p.appliedTime || '-'}</div>
+                    <div class="text-emerald-700"><b>2. Counselor:</b> ${p.counselorApproval?.time || p.parentCallTime || '-'}</div>
+                    <div class="text-indigo-700"><b>3. Advisor:</b> ${p.advisorApproval?.time || '-'}</div>
+                  </td>
+                  <td class="p-3">
+                    <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
+                    <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
+                      📄 View Full AI Letter
+                    </button>
+                  </td>
+                  <td class="p-3">
+                    <div class="space-y-1">
+                      <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">✓ ${p.parentCalledBy || 'I talked to their parents'}</span><br>
+                      <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800">✓ Advisor: ${p.advisorApproval?.advisorName || 'Approved'}</span>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="approveHODPass('${p._id}')" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow whitespace-nowrap transition active:scale-95">
+                      Authorize ➔ Principal
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load HOD queue.</div>`;
+      }
     }
 
-    // 4. PRINCIPAL QUEUE: College-wide
+    async function approveHODPass(passId) {
+      const res = await fetch('/api/approve/hod', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passId, hodName: loggedUser.name })
+      });
+      const data = await res.json();
+      alert(data.message);
+      refreshAllAuthorityViews();
+    }
+
+    // 4. PRINCIPAL VIEW
     async function fetchPrincipalQueue() {
       const el = document.getElementById('principalQueue');
       if (!el) return;
@@ -758,77 +1057,210 @@
         const passes = await res.json();
 
         if (!passes || passes.length === 0) {
-          el.innerHTML = `<div class="p-6 text-center text-xs text-slate-400 font-medium">No requests currently pending Principal clearance across any department.</div>`;
+          el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl border border-slate-200">No requests currently pending Principal clearance across any department.</div>`;
           return;
         }
 
         el.innerHTML = `
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-                <tr>
-                  <th class="p-3">Roll & Name</th>
-                  <th class="p-3">Department & Section</th>
-                  <th class="p-3">Reason & Formal Letter</th>
-                  <th class="p-3">Verification Chain</th>
-                  <th class="p-3 text-right">Action</th>
+          <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3">Roll & Name</th>
+                <th class="p-3">Student Standing</th>
+                <th class="p-3">Comprehensive Timestamp Chain (IST)</th>
+                <th class="p-3">Reason & Letter</th>
+                <th class="p-3">Verification Chain</th>
+                <th class="p-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${passes.map(p => `
+                <tr class="hover:bg-slate-50 transition">
+                  <td class="p-3 font-mono">
+                    <span class="font-bold text-red-600">${p.rollNo}</span><br>
+                    <span class="text-slate-800 font-sans font-semibold">${p.name}</span>
+                  </td>
+                  <td class="p-3 font-mono text-slate-600 font-bold">
+                    ${formatClassSection(p.dept, p.yearSec, p.academicYear)}
+                  </td>
+                  <td class="p-3 font-mono text-[10px] space-y-0.5 bg-slate-50 p-2 rounded">
+                    <div><b>1. Applied:</b> ${p.appliedTime || '-'}</div>
+                    <div class="text-emerald-700"><b>2. Counselor:</b> ${p.counselorApproval?.time || p.parentCallTime || '-'}</div>
+                    <div class="text-indigo-700"><b>3. Advisor:</b> ${p.advisorApproval?.time || '-'}</div>
+                    <div class="text-purple-700"><b>4. HOD:</b> ${p.hodApproval?.time || '-'}</div>
+                  </td>
+                  <td class="p-3 max-w-xs">
+                    <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
+                    <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
+                      📄 Read Letter
+                    </button>
+                  </td>
+                  <td class="p-3">
+                    <div class="space-y-1">
+                      <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">✓ ${p.parentCalledBy || 'I talked to their parents'}</span><br>
+                      <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">✓ Advisor: ${p.advisorApproval?.advisorName || 'Approved'} & HOD: ${p.hodApproval?.hodName || 'Authorized'}</span>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition active:scale-95 whitespace-nowrap text-xs">
+                      Grant 20-Min Pass ➔
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100">
-                ${passes.map(p => `
-                  <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3 font-mono">
-                      <span class="font-bold text-blue-600">${p.rollNo}</span><br>
-                      <span class="text-slate-800 font-sans font-semibold">${p.name}</span>
-                    </td>
-                    <td class="p-3 font-mono text-slate-600">
-                      <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold">${p.dept}</span> 
-                      Sec ${p.yearSec || 'A'}
-                    </td>
-                    <td class="p-3 max-w-xs">
-                      <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-                      <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                        📄 Read AI Letter
-                      </button>
-                    </td>
-                    <td class="p-3">
-                      <div class="space-y-1">
-                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                          ✓ Parent: ${p.parentCalledBy || 'Verified'}
-                        </span><br>
-                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">
-                          ✓ Advisor & HOD Authorized
-                        </span>
-                      </div>
-                    </td>
-                    <td class="p-3 text-right">
-                      <button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition active:scale-95 whitespace-nowrap text-xs">
-                        Grant 20-Min Gate Pass ➔
-                      </button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
+              `).join('')}
+            </tbody>
+          </table>
         `;
       } catch (err) {
-        el.innerHTML = `<div class="p-6 text-center text-xs text-rose-500 font-medium">Error loading queue. Please refresh.</div>`;
+        el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load Principal queue.</div>`;
       }
     }
 
     async function approveGenericPass(passId, endpoint) {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passId })
-      });
-      const data = await res.json();
-      alert(data.message);
-      openDashboard(loggedUser);
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ passId })
+        });
+        const data = await res.json();
+        alert(data.message);
+        refreshAllAuthorityViews();
+      } catch (err) {
+        alert('Server processing error.');
+      }
     }
+function generateWardenGatePass() {
+    const startTime = document.getElementById('passStartTime').value;
+    const endTime = document.getElementById('passEndTime').value;
+    
+    if (!startTime || !endTime) {
+        alert("Please select both start and end date/time ranges before issuing a pass.");
+        return;
+    }
+    
+    if (typeof selectedStudentId === 'undefined' || !selectedStudentId) {
+        alert("Please select a student from the warden's list first.");
+        return;
+    }
+    
+    alert(`Gate pass successfully generated for Student ID: ${selectedStudentId}\nFrom: ${startTime}\nTo: ${endTime}`);
+    
+    document.getElementById('passStartTime').value = '';
+    document.getElementById('passEndTime').value = '';
+}
+async function fetchBoysWardenQueue() {
+  const el = document.getElementById('boysWardenQueue');
+ if (!el) return;
+  try {
+    const res = await fetch('/api/passes?status=Pending%20Boys%20Warden&role=boys_warden');
+    const passes = await res.json();
+    if (!passes || passes.length === 0) {
+      el.innerHTML = '<div class="p-6 text-center text-xs text-slate-500 font-medium">No pending boys hosteler passes.</div>';
+      return;
+    }
+    let html = `<table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden">
+      <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+        <tr>
+          <th class="p-3">Student</th>
+          <th class="p-3">Roll No</th>
+          <th class="p-3">Reason</th>
+          <th class="p-3">Exit Window</th>
+          <th class="p-3">Return Window</th>
+          <th class="p-3">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">`;
+    passes.forEach(p => {
+      html += `<tr class="hover:bg-slate-50">
+        <td class="p-3 font-semibold">${p.name}</td>
+        <td class="p-3">${p.rollNo}</td>
+        <td class="p-3 text-slate-600">${p.reason}</td>
+        <td class="p-3"><input type="datetime-local" id="exit-${p._id}" class="border rounded px-2 py-1 text-xs"></td>
+        <td class="p-3"><input type="datetime-local" id="return-${p._id}" class="border rounded px-2 py-1 text-xs"></td>
+        <td class="p-3">
+          <button onclick="approveBoysWardenPass('${p._id}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm">
+            Grant & Set Timing
+          </button>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+    el.innerHTML = html;
+  } catch (err) {
+    el.innerHTML = '<div class="p-4 text-center text-xs text-rose-500">Failed to load boys warden queue</div>';
+  }
+}
 
-    // STRICTLY SCOPED LOGS TABLE FOR BOTTOM DASHBOARD
+async function approveBoysWardenPass(passId) {
+  const exitTime = document.getElementById(`exit-${passId}`).value;
+  const returnTime = document.getElementById(`return-${passId}`).value;
+  const res = await fetch('/api/approve/boys-warden', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ passId, exitTime, returnTime })
+  });
+  const data = await res.json();
+  alert(data.message);
+  refreshAllAuthorityViews();
+}
+
+async function fetchGirlsWardenQueue() {
+  const el = document.getElementById('girlsWardenQueue');
+  if (!el) return;
+  try {
+    const res = await fetch('/api/passes?status=Pending%20Girls%20Warden&role=girls_warden');
+    const passes = await res.json();
+    if (!passes || passes.length === 0) {
+      el.innerHTML = '<div class="p-6 text-center text-xs text-slate-500 font-medium">No pending girls hosteler passes.</div>';
+      return;
+    }
+    let html = `<table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden">
+      <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+        <tr>
+          <th class="p-3">Student</th>
+          <th class="p-3">Roll No</th>
+          <th class="p-3">Reason</th>
+          <th class="p-3">Exit Window</th>
+          <th class="p-3">Return Window</th>
+          <th class="p-3">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">`;
+    passes.forEach(p => {
+      html += `<tr class="hover:bg-slate-50">
+        <td class="p-3 font-semibold">${p.name}</td>
+        <td class="p-3">${p.rollNo}</td>
+        <td class="p-3 text-slate-600">${p.reason}</td>
+        <td class="p-3"><input type="datetime-local" id="exit-${p._id}" class="border rounded px-2 py-1 text-xs"></td>
+        <td class="p-3"><input type="datetime-local" id="return-${p._id}" class="border rounded px-2 py-1 text-xs"></td>
+        <td class="p-3">
+          <button onclick="approveGirlsWardenPass('${p._id}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm">
+            Grant & Set Timing
+          </button>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+    el.innerHTML = html;
+  } catch (err) {
+    el.innerHTML = '<div class="p-4 text-center text-xs text-rose-500">Failed to load girls warden queue</div>';
+  }
+}
+
+async function approveGirlsWardenPass(passId) {
+  const exitTime = document.getElementById(`exit-${passId}`).value;
+  const returnTime = document.getElementById(`return-${passId}`).value;
+  const res = await fetch('/api/approve/girls-warden', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ passId, exitTime, returnTime })
+  });
+  const data = await res.json();
+  alert(data.message);
+  refreshAllAuthorityViews();
+}
+    // AUDIT LOGS
     async function loadUniversalLogs() {
       const tbody = document.getElementById('universalLogsBody');
       if (!tbody || !loggedUser) return;
@@ -837,70 +1269,63 @@
         let logUrl = '/api/passes?';
         if (loggedUser.role === 'principal') {
           logUrl += 'role=principal';
-          document.getElementById('logsTitle').innerText = 'College-Wide Master Outpass Logs (All Departments)';
+          document.getElementById('logsTitle').innerText = 'GRTIET College-Wide Master Outpass Records';
         } else if (loggedUser.role === 'hod') {
           logUrl += `role=hod&dept=${encodeURIComponent(loggedUser.dept)}`;
-          document.getElementById('logsTitle').innerText = `${loggedUser.dept} Department Movement Logs (All Sections)`;
+          document.getElementById('logsTitle').innerText = `${loggedUser.dept} Department Outpass Records`;
         } else if (loggedUser.role === 'advisor') {
           logUrl += `role=advisor&dept=${encodeURIComponent(loggedUser.dept)}&yearSec=${encodeURIComponent(loggedUser.yearSec)}`;
-          document.getElementById('logsTitle').innerText = `${loggedUser.dept} - Section ${loggedUser.yearSec} Outpass Logs Only`;
+          document.getElementById('logsTitle').innerText = `${loggedUser.dept} - Section ${loggedUser.yearSec} Records`;
         } else if (loggedUser.role === 'counselor') {
           logUrl += `role=counselor&counselorName=${encodeURIComponent(loggedUser.name)}&startRoll=${encodeURIComponent(loggedUser.startRoll || '')}&endRoll=${encodeURIComponent(loggedUser.endRoll || '')}`;
-          document.getElementById('logsTitle').innerText = `Outpass Logs for ${loggedUser.name} (${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'})`;
+          document.getElementById('logsTitle').innerText = `Outpass Records for ${loggedUser.name} (${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'})`;
         }
 
         const res = await fetch(logUrl);
         masterPassList = await res.json();
 
         if (!masterPassList || masterPassList.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-400">No records found within your assigned jurisdiction.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">No records found within your assigned jurisdiction.</td></tr>`;
           return;
         }
 
         tbody.innerHTML = masterPassList.map(p => `
-          <tr class="hover:bg-slate-50 transition">
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100 last:border-0">
             <td class="p-3 font-mono">
-              <span class="font-bold text-blue-600">${p.rollNo}</span><br>
+              <span class="font-bold text-red-600">${p.rollNo}</span><br>
               <span class="text-slate-800 font-sans font-semibold">${p.name}</span>
             </td>
             <td class="p-3 font-mono text-slate-600">
-              <span class="font-bold text-blue-700">${p.dept}</span> - Sec ${p.yearSec || 'A'}
+              <span class="font-bold text-red-700">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</span>
             </td>
             <td class="p-3 text-[11px] text-slate-600">
               📞 Parent: <b>${p.parentContact || '-'}</b><br>
-              📱 Student: ${p.mobile || '-'}<br>
-              🏠 ${p.address || 'Campus Hostel'}
+              📱 Student: ${p.mobile || '-'}
             </td>
             <td class="p-3">
-              <div class="font-bold text-slate-800 text-[11px] mb-1">"${p.reason}"</div>
-              <button onclick='viewFormalLetter(${JSON.stringify(p.formalLetter || p.reason)})' class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
+              <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
+              <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
                 📄 Letter
               </button>
             </td>
-            <td class="p-3">
-              <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold ${p.parentCallVerified ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}">
-                ${p.parentCallVerified ? '✓ ' + p.parentCalledBy : 'Pending Call'}
-              </span>
-            </td>
-            <td class="p-3 text-[10px] space-y-0.5">
-              <div>C: ${p.counselorApproval?.approved ? '✓' : '—'} | Adv: ${p.advisorApproval?.approved ? '✓' : '—'}</div>
-              <div>HOD: ${p.hodApproval?.approved ? '✓' : '—'} | Princ: ${p.principalApproval?.approved ? '✓' : '—'}</div>
-            </td>
-            <td class="p-3 text-[10px] font-mono">
-              Appr: ${p.approvalTime || '—'}<br>
-              Valid: <span class="text-emerald-700 font-bold">${p.validUntil || '—'}</span>
+            <td class="p-3 font-mono text-[10px] text-slate-600 space-y-0.5 bg-slate-50 p-2 rounded">
+              <div><b>Applied:</b> ${p.appliedTime || '-'}</div>
+              <div><b>Counselor:</b> ${p.counselorApproval?.time || p.parentCallTime || '-'}</div>
+              <div><b>Advisor:</b> ${p.advisorApproval?.time || '-'}</div>
+              <div><b>HOD:</b> ${p.hodApproval?.time || '-'}</div>
+              <div><b>Principal:</b> ${p.approvalTime || '-'}</div>
             </td>
             <td class="p-3">
               <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${p.exitStatus === 'Exited Campus' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-                ${p.exitStatus === 'Exited Campus' ? '🚪 EXITED' : '🏫 INSIDE'}
+                ${p.exitStatus === 'Exited Campus' ? '🚪 EXITED (' + (p.exitTime || '') + ')' : '🏫 ' + p.status.toUpperCase()}
               </span>
-              <div class="text-[10px] font-mono mt-1 font-bold ${p.exitStatus === 'Exited Campus' ? 'text-slate-400' : 'text-rose-600'}">
-                ${p.exitStatus === 'Exited Campus' ? p.exitTime : formatRemainingTime(p.expiresAt)}
-              </div>
             </td>
-            <td class="p-3 text-right">
-              <button onclick='downloadSinglePassPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded text-xs font-bold shadow-sm">
-                PDF
+            <td class="p-3 text-right space-y-1">
+              <button onclick='downloadSinglePassPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded text-xs font-bold shadow-sm transition block ml-auto">
+                PDF Pass
+              </button>
+              <button onclick='downloadOfficialLetterOnlyPDF(${JSON.stringify(p)})' class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-xs font-bold shadow-sm transition block ml-auto">
+                PDF Letter
               </button>
             </td>
           </tr>
@@ -908,8 +1333,10 @@
       } catch (err) {}
     }
 
-    function viewFormalLetter(letterText) {
-      document.getElementById('letterModalContent').innerText = letterText;
+    function viewFormalLetter(pass) {
+      currentModalPass = pass;
+      document.getElementById('letterModalContent').innerText = pass.formalLetter || pass.reason;
+      document.getElementById('modalDownloadLetterBtn').onclick = () => downloadOfficialLetterOnlyPDF(pass);
       document.getElementById('letterModal').classList.remove('hidden');
     }
 
@@ -926,56 +1353,196 @@
       return `⏱️ ${m}m ${s}s left`;
     }
 
-    // TOP BULK PDF DOWNLOAD ENGINE
     function downloadMasterPDF() {
-      if (!masterPassList || masterPassList.length === 0) return alert('No pass records found in your jurisdiction to export.');
+      if (!masterPassList || masterPassList.length === 0) return alert('No pass records found to export.');
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
-      doc.setFillColor(37, 99, 235);
+      doc.setFillColor(185, 28, 28);
       doc.rect(10, 10, 277, 24, 'F');
 
       doc.setTextColor(255, 255, 255);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(16);
-      doc.text("GATEMATRIX INSTITUTIONAL ACCESS REPOSITORY", 148, 20, { align: "center" });
+      doc.setFontSize(14);
+      doc.text("GRT INSTITUTE OF ENGINEERING AND TECHNOLOGY, TIRUTTANI", 148, 18, { align: "center" });
 
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'normal');
-      doc.text(`OFFICIAL REPOSITORY REPORT • JURISDICTION: ${loggedUser.role.toUpperCase()} (${loggedUser.dept} ${loggedUser.yearSec ? '- Section ' + loggedUser.yearSec : ''})`, 148, 27, { align: "center" });
+      doc.text("(AN AUTONOMOUS INSTITUTION) • NAAC A++ • AICTE APPROVED • ANNA UNIVERSITY AFFILIATED", 148, 24, { align: "center" });
+      doc.text(`MASTER REPOSITORY AUDIT • JURISDICTION: ${loggedUser.role.toUpperCase()} (${loggedUser.dept || 'ALL'} ${loggedUser.yearSec ? '- Sec ' + loggedUser.yearSec : ''})`, 148, 30, { align: "center" });
 
       const nowString = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'full', timeStyle: 'medium' });
       doc.setTextColor(51, 65, 85);
-      doc.setFontSize(8.5);
-      doc.text(`Official Audit: Generated By: ${loggedUser.name} (${loggedUser.role.toUpperCase()}) | Download Date & Time: ${nowString} IST`, 12, 39);
+      doc.setFontSize(8);
+      doc.text(`Generated By: ${loggedUser.name} (${loggedUser.role.toUpperCase()}) | Date: ${nowString} IST`, 12, 39);
 
       const tableData = masterPassList.map((p, idx) => [
         idx + 1,
         p.rollNo,
         p.name,
-        `${p.dept} - ${p.yearSec || 'A'}`,
-        p.parentContact || '-',
-        p.parentCallVerified ? `✓ ${p.parentCalledBy}` : 'Unverified',
+        formatClassSection(p.dept, p.yearSec, p.academicYear),
+        p.appliedTime || '-',
+        p.parentCallTime || '-',
+        p.advisorApproval?.time || '-',
+        p.hodApproval?.time || '-',
         p.approvalTime || '-',
-        p.exitStatus === 'Exited Campus' ? `EXITED (${p.exitTime})` : 'INSIDE CAMPUS',
-        p.reason
+        p.exitStatus === 'Exited Campus' ? `EXITED (${p.exitTime || ''})` : p.status
       ]);
 
       doc.autoTable({
-        startY: 43,
+        startY: 42,
         margin: { left: 10, right: 10 },
-        head: [['#', 'Roll No', 'Name', 'Class & Sec', 'Parent Contact', 'Parent Call Audit', 'Approved Time', 'Gate Exit Status', 'Reason']],
+        head: [['#', 'Roll No', 'Name', 'Standing & Sec', '1. Applied (IST)', '2. Counselor (IST)', '3. Advisor (IST)', '4. HOD (IST)', '5. Principal (IST)', 'Exit Status']],
         body: tableData,
         theme: 'grid',
-        headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+        headStyles: { fillColor: [185, 28, 28], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.5 },
+        styles: { fontSize: 7, cellPadding: 2 }
+      });
+
+      doc.save(`GRTIET_Audit_Log_${loggedUser.role}_${Date.now()}.pdf`);
+    }
+
+    function downloadAllCompleteLettersPDF() {
+      if (!masterPassList || masterPassList.length === 0) return alert('No requisition letters found to export.');
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      masterPassList.forEach((pass, index) => {
+        if (index > 0) doc.addPage();
+
+        doc.setDrawColor(203, 213, 225);
+        doc.setLineWidth(0.6);
+        doc.rect(10, 10, 190, 277);
+
+        doc.setFillColor(185, 28, 28);
+        doc.rect(10, 10, 190, 22, 'F');
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.text("GRT INSTITUTE OF ENGINEERING AND TECHNOLOGY", 105, 18, { align: "center" });
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.text("TIRUTTANI - 631 209 • (AN AUTONOMOUS INSTITUTION) • LEAVE REQUISITION DOSSIER", 105, 24, { align: "center" });
+
+        const letterText = pass.formalLetter || `To The Principal,\n\nRespected Sir/Madam,\nI request leave due to: ${pass.reason}.\n\nYours obediently,\n${pass.name}`;
+
+        doc.autoTable({
+          startY: 36,
+          margin: { left: 14, right: 14 },
+          head: [[`OFFICIAL REQUISITION LETTER #${index + 1} • ROLL NO: ${pass.rollNo}`]],
+          body: [[letterText]],
+          theme: 'plain',
+          headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+          styles: { fontSize: 7.5, cellPadding: 3, font: 'courier', textColor: [30, 41, 59], lineHeight: 1.2 }
+        });
+
+        doc.autoTable({
+          startY: doc.lastAutoTable.finalY + 4,
+          margin: { left: 14, right: 14 },
+          head: [['GOVERNANCE LEVEL', 'TIMESTAMP SIGN-OFF (IST) & STAMP']],
+          body: [
+            ['Student Submission Time', pass.appliedTime || '-'],
+            ['Counselor Verification Time', pass.counselorApproval?.time || pass.parentCallTime || '-'],
+            ['Class Advisor Approval Time', pass.advisorApproval?.time || '-'],
+            ['HOD Authorization Time', pass.hodApproval?.time || '-'],
+            ['Principal Clearance Time', pass.approvalTime || '-']
+          ],
+          theme: 'grid',
+          headStyles: { fillColor: [185, 28, 28], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.5 },
+          styles: { fontSize: 7.5, cellPadding: 2 }
+        });
+
+        const finalY = doc.lastAutoTable.finalY + 16;
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(71, 85, 105);
+
+        doc.text("Class Counselor", 24, finalY);
+        doc.text("Class Advisor", 72, finalY);
+        doc.text("HOD", 122, finalY);
+        doc.text("Principal / Security", 158, finalY);
+
+        doc.setDrawColor(148, 163, 184);
+        doc.line(20, finalY - 3, 50, finalY - 3);
+        doc.line(68, finalY - 3, 98, finalY - 3);
+        doc.line(118, finalY - 3, 140, finalY - 3);
+        doc.line(155, finalY - 3, 192, finalY - 3);
+      });
+
+      doc.save(`GRTIET_All_Letters_${loggedUser.role}_${Date.now()}.pdf`);
+    }
+
+    function downloadOfficialLetterOnlyPDF(pass) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setDrawColor(203, 213, 225);
+      doc.setLineWidth(0.6);
+      doc.rect(10, 10, 190, 277);
+
+      doc.setFillColor(185, 28, 28);
+      doc.rect(10, 10, 190, 22, 'F');
+
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("GRT INSTITUTE OF ENGINEERING AND TECHNOLOGY", 105, 18, { align: "center" });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text("TIRUTTANI - 631 209 • (AN AUTONOMOUS INSTITUTION)", 105, 24, { align: "center" });
+      doc.text("FORMAL LEAVE & CAMPUS CLEARANCE APPLICATION REQUISITION", 105, 30, { align: "center" });
+
+      const letterText = pass.formalLetter || `To The Principal,\n\nRespected Sir/Madam,\nI request leave due to: ${pass.reason}.\n\nYours obediently,\n${pass.name}`;
+
+      doc.autoTable({
+        startY: 36,
+        margin: { left: 14, right: 14 },
+        head: [['OFFICIAL REQUISITION LETTER']],
+        body: [[letterText]],
+        theme: 'plain',
+        headStyles: { fillColor: [185, 28, 28], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8.5 },
+        styles: { fontSize: 8, cellPadding: 3, font: 'courier', textColor: [30, 41, 59], lineHeight: 1.25 }
+      });
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 4,
+        margin: { left: 14, right: 14 },
+        head: [['CLEARANCE TIER', 'SIGN-OFF AUDIT TIMESTAMP (IST)']],
+        body: [
+          ['Application Submitted', pass.appliedTime || '-'],
+          ['Counselor Parent Call Check', pass.counselorApproval?.time || pass.parentCallTime || '-'],
+          ['Class Advisor Endorsement', pass.advisorApproval?.time || '-'],
+          ['Head of Department Sign-off', pass.hodApproval?.time || '-'],
+          ['Principal Clearance', pass.approvalTime || '-']
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold' },
         styles: { fontSize: 7.5, cellPadding: 2 }
       });
 
-      doc.save(`GateMatrix_${loggedUser.role}_${loggedUser.dept}_${Date.now()}.pdf`);
+      const finalY = doc.lastAutoTable.finalY + 18;
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(71, 85, 105);
+
+      doc.text("Class Counselor", 24, finalY);
+      doc.text("Class Advisor", 72, finalY);
+      doc.text("HOD", 122, finalY);
+      doc.text("Principal / Directorate", 158, finalY);
+
+      doc.setDrawColor(148, 163, 184);
+      doc.line(20, finalY - 3, 50, finalY - 3);
+      doc.line(68, finalY - 3, 98, finalY - 3);
+      doc.line(118, finalY - 3, 140, finalY - 3);
+      doc.line(155, finalY - 3, 192, finalY - 3);
+
+      doc.save(`GRTIET_Letter_${pass.rollNo}.pdf`);
     }
 
-    // INDIVIDUAL PASS PDF
     function downloadSinglePassPDF(pass) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -984,59 +1551,48 @@
       doc.setLineWidth(0.8);
       doc.rect(10, 10, 190, 277);
 
-      doc.setFillColor(37, 99, 235);
-      doc.rect(10, 10, 190, 22, 'F');
+      doc.setFillColor(185, 28, 28);
+      doc.rect(10, 10, 190, 25, 'F');
 
       doc.setTextColor(255, 255, 255);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(15);
-      doc.text("GATEMATRIX OFFICIAL PASS & LEAVE REQUISITION", 105, 19, { align: "center" });
+      doc.setFontSize(13);
+      doc.text("GRT INSTITUTE OF ENGINEERING AND TECHNOLOGY", 105, 18, { align: "center" });
 
-      const downloadAudit = `Downloaded By: ${loggedUser.name} (${loggedUser.role.toUpperCase()}) on ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST`;
+      doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.text(downloadAudit, 105, 27, { align: "center" });
+      doc.text("TIRUTTANI - 631 209 • (AN AUTONOMOUS INSTITUTION)", 105, 24, { align: "center" });
+      doc.text("OFFICIAL CAMPUS GATE PASS & AUTHORIZED LEAVE CLEARANCE", 105, 30, { align: "center" });
 
       doc.autoTable({
-        startY: 34,
+        startY: 40,
         margin: { left: 14, right: 14 },
-        head: [['STUDENT PROFILE', 'RECORD DETAILS']],
+        head: [['STUDENT PROFILE', 'OFFICIAL RECORD DETAILS']],
         body: [
           ['Roll Number', pass.rollNo || '-'],
           ['Student Name', pass.name || '-'],
-          ['Department & Section', `${pass.dept} - Section ${pass.yearSec || 'A'}`],
+          ['Academic Standing & Sec', formatClassSection(pass.dept, pass.yearSec, pass.academicYear)],
           ['Assigned Counselor', pass.counselorName || '-'],
-          ['Parent Phone (Verified)', pass.parentContact || '-'],
+          ['Verified Parent Phone', pass.parentContact || '-'],
           ['Student Mobile', pass.mobile || '-'],
-          ['Stated Outpass Reason', pass.reason || '-']
+          ['Applied Timestamp', pass.appliedTime || '-'],
+          ['Stated Leave Reason', pass.reason || '-']
         ],
         theme: 'striped',
         headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold' },
         styles: { fontSize: 8, cellPadding: 2.5 }
       });
 
-      const letterText = pass.formalLetter || `To The Principal,\n\nRespected Sir/Madam,\nI request leave due to: ${pass.reason}.\n\nYours obediently,\n${pass.name}`;
-      
       doc.autoTable({
         startY: doc.lastAutoTable.finalY + 4,
         margin: { left: 14, right: 14 },
-        head: [['OFFICIAL REQUISITION LETTER (AUTO-GENERATED VIA GATEMATRIX AI)']],
-        body: [[letterText]],
-        theme: 'plain',
-        headStyles: { fillColor: [71, 85, 105], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
-        styles: { fontSize: 7, cellPadding: 3, font: 'courier', textColor: [30, 41, 59] }
-      });
-
-      doc.autoTable({
-        startY: doc.lastAutoTable.finalY + 4,
-        margin: { left: 14, right: 14 },
-        head: [['GOVERNANCE TIER', 'AUDIT STATUS & STAMP']],
+        head: [['GOVERNANCE LEVEL', 'TIMESTAMP SIGN-OFF (IST)']],
         body: [
-          ['Tier 1: Counselor Parent Check', pass.parentCallVerified ? `VERIFIED: ${pass.parentCalledBy} (${pass.parentCallTime})` : 'Unverified'],
-          ['Tier 2: Class Advisor Sign-Off', pass.advisorApproval?.approved ? `APPROVED (${pass.advisorApproval?.time})` : 'Pending'],
-          ['Tier 3: HOD Authorization', pass.hodApproval?.approved ? `AUTHORIZED (${pass.hodApproval?.time})` : 'Pending'],
-          ['Tier 4: Principal Final Clearance', pass.principalApproval?.approved ? `GRANTED (${pass.approvalTime})` : 'Pending'],
-          ['Physical Gate Movement Status', pass.exitStatus === 'Exited Campus' ? `EXITED AT ${pass.exitTime}` : 'INSIDE CAMPUS']
+          ['Tier 1: Counselor Parent Call Check', pass.counselorApproval?.time || pass.parentCallTime || 'Unverified'],
+          ['Tier 2: Class Advisor Endorsement', pass.advisorApproval?.time || 'Pending'],
+          ['Tier 3: HOD Authorization', pass.hodApproval?.time || 'Pending'],
+          ['Tier 4: Principal Final Clearance', pass.approvalTime || 'Pending'],
+          ['Physical Campus Exit Status', pass.exitStatus === 'Exited Campus' ? `EXITED AT ${pass.exitTime}` : 'INSIDE CAMPUS']
         ],
         theme: 'grid',
         headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold' },
@@ -1059,23 +1615,29 @@
       doc.line(118, finalY - 3, 140, finalY - 3);
       doc.line(155, finalY - 3, 192, finalY - 3);
 
-      doc.save(`FormalPass_${pass.rollNo}.pdf`);
+      doc.save(`GRTIET_Pass_${pass.rollNo}.pdf`);
     }
 
-    async function uploadCounselorExcel() {
-      const file = document.getElementById('counselorFile').files[0];
-      if (!file) return;
+    async function uploadCounselorExcel(event) {
+      if (event) event.preventDefault();
+      const fileInput = document.getElementById('counselorFile');
+      const file = fileInput?.files[0];
+      if (!file) return alert('Please choose an Excel or CSV file first.');
 
       const fd = new FormData();
       fd.append('file', file);
-      fd.append('dept', loggedUser.dept);
-      fd.append('yearSec', loggedUser.yearSec);
-      fd.append('counselorName', loggedUser.name);
+      fd.append('dept', loggedUser.dept || '');
+      fd.append('yearSec', loggedUser.yearSec || '');
+      fd.append('counselorName', loggedUser.name || '');
 
-      const res = await fetch('/api/upload-students', { method: 'POST', body: fd });
-      const data = await res.json();
-      alert(data.message);
-      document.getElementById('counselorFile').value = '';
+      try {
+        const res = await fetch('/api/upload-students', { method: 'POST', body: fd });
+        const data = await res.json();
+        alert(data.message || 'File processed successfully.');
+        fileInput.value = '';
+      } catch (err) {
+        alert('File upload failed.');
+      }
     }
 
     function logout() {
@@ -1083,12 +1645,21 @@
       location.reload();
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(obj) {
+      return JSON.stringify(obj).replace(/"/g, '&quot;');
+    }
+
     setInterval(() => {
       if (loggedUser) {
         if (loggedUser.role === 'student') loadStudentPersonalStatus();
-        else loadUniversalLogs();
+        else refreshAllAuthorityViews();
       }
-    }, 6000);
+    }, 8000);
   </script>
 </body>
 </html>
