@@ -1,0 +1,36 @@
+/**
+ * GateMatrix Custom Styles
+ */
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-image: url('https://content.jdmagicbox.com/v2/comp/tiruttani/h6/9999pxx44.xx44.130608171735.f7h6/catalogue/grt-institute-of-engineering-and-technology-tiruttani-ho-tiruttani-engineering-colleges-ga3mika.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Scrollbar customization for data tables */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.6);
+  border-radius: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
