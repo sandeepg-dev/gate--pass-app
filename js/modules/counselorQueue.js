@@ -14,58 +14,85 @@ async function fetchCounselorQueue() {
     )}`;
     const passes = await Api.get(qUrl);
 
+    const countBadge = document.getElementById('authBadge_requests');
+    if (countBadge) {
+      countBadge.innerText = (passes || []).length;
+      countBadge.className = (passes && passes.length > 0)
+        ? 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600 text-white animate-pulse'
+        : 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-600';
+    }
+    const kpiPending = document.getElementById('kpi_pending');
+    if (kpiPending) kpiPending.innerText = (passes || []).length;
+
     if (!passes || passes.length === 0) {
-      el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl">No student passes pending verification in range ${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'}.</div>`;
+      el.innerHTML = `
+        <div class="p-12 text-center bg-white space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center text-2xl mx-auto shadow-2xs">🎉</div>
+          <div class="text-sm font-bold text-slate-800">No Pending Leave Requests</div>
+          <p class="text-xs md:text-sm text-slate-500 max-w-sm mx-auto">No student passes currently pending parent call verification in roll range ${loggedUser.startRoll || 'Start'} to ${loggedUser.endRoll || 'End'}.</p>
+        </div>`;
       return;
     }
 
     el.innerHTML = `
-      <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-        <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+      <table class="enterprise-table min-w-[850px]">
+        <thead>
           <tr>
-            <th class="p-3">Roll & Name</th>
-            <th class="p-3">Student Standing</th>
-            <th class="p-3">Applied Timestamp</th>
-            <th class="p-3">Parent Phone</th>
-            <th class="p-3">Reason & Letter</th>
-            <th class="p-3">Verification Check</th>
-            <th class="p-3 text-right">Action</th>
+            <th>Student & Roll No</th>
+            <th>Class & Accommodation</th>
+            <th>Applied Timestamp</th>
+            <th>Parent Phone Call</th>
+            <th>Reason & Document</th>
+            <th>Phone Call Verification</th>
+            <th class="text-right">Decision</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody>
           ${passes
             .map(
               p => `
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-mono"><b>${p.rollNo}</b><br><span class="text-slate-600 font-sans">${p.name}</span></td>
-              <td class="p-3">
-                <div class="font-bold text-red-700">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</div>
+            <tr>
+              <td>
+                <div class="font-bold text-slate-900 text-sm">${escapeHtml(p.name)}</div>
+                <div class="font-mono text-xs font-bold text-red-700 bg-red-50/80 border border-red-200/60 inline-block px-2 py-0.5 rounded-md mt-0.5">${p.rollNo}</div>
+              </td>
+              <td>
+                <div class="font-semibold text-slate-800 text-xs md:text-sm">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</div>
                 <div class="mt-1">
                   ${formatAccommodationBadge(p.accommodation)}
                 </div>
               </td>
-              <td class="p-3 font-mono text-[11px] text-indigo-900 font-semibold bg-indigo-50/50">⏱️ ${p.appliedTime || '-'}</td>
-              <td class="p-3">
-                <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold hover:bg-emerald-100">
+              <td>
+                <div class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg">
+                  ⏱️ ${p.appliedTime || '-'}
+                </div>
+              </td>
+              <td>
+                <a href="tel:${p.parentContact}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold transition active:scale-95">
                   📞 ${p.parentContact || 'N/A'}
                 </a>
               </td>
-              <td class="p-3">
-                <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
-                <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                  📄 View Full Letter
+              <td class="max-w-xs">
+                <div class="font-medium text-slate-800 text-xs md:text-sm leading-relaxed mb-1.5 line-clamp-2">"${escapeHtml(p.reason)}"</div>
+                <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition active:scale-95">
+                  📄 View Letter
                 </button>
               </td>
-              <td class="p-3">
-                <label class="inline-flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                  <input type="checkbox" id="callCheck_${p._id}" class="w-4 h-4 text-emerald-600 rounded">
-                  <span class="text-[11px] font-bold text-slate-700">I talked to their parents</span>
+              <td>
+                <label class="inline-flex items-center gap-2.5 cursor-pointer bg-slate-50 hover:bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200 transition">
+                  <input type="checkbox" id="callCheck_${p._id}" class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
+                  <span class="text-xs font-bold text-slate-800 select-none">I talked to their parents</span>
                 </label>
               </td>
-              <td class="p-3 text-right">
-                <button onclick="verifyCounselorPass('${p._id}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow whitespace-nowrap transition active:scale-95">
-                  Confirm & Forward ➔
-                </button>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <button onclick="openRejectModal('${p._id}', 'Counselor')" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/80 font-semibold rounded-xl shadow-2xs whitespace-nowrap transition active:scale-95 text-xs md:text-sm">
+                    ✕ Reject
+                  </button>
+                  <button onclick="verifyCounselorPass('${p._id}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-2xs whitespace-nowrap transition active:scale-95 text-xs md:text-sm flex items-center gap-1.5">
+                    <span>Approve ➔</span>
+                  </button>
+                </div>
               </td>
             </tr>
           `
@@ -75,14 +102,14 @@ async function fetchCounselorQueue() {
       </table>
     `;
   } catch (err) {
-    el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load counselor queue.</div>`;
+    el.innerHTML = `<div class="p-8 text-center text-xs md:text-sm text-rose-500 font-semibold">Failed to load counselor queue.</div>`;
   }
 }
 
 async function verifyCounselorPass(passId) {
   const isChecked = document.getElementById(`callCheck_${passId}`)?.checked;
   if (!isChecked) {
-    return alert("Please check the 'I talked to their parents' box before confirming.");
+    return showToast("Please check the 'I talked to their parents' box before confirming.", 'warning', 3500);
   }
 
   try {
@@ -92,13 +119,13 @@ async function verifyCounselorPass(passId) {
       counselorName: loggedUser.name
     });
     if (data && (data.success === false || data.error)) {
-      alert(data.message || data.error || 'Verification failed.');
+      showToast(data.message || data.error || 'Verification failed.', 'error', 3500);
       return;
     }
-    alert(data.message || 'Counselor verified successfully.');
+    showToast(data.message || 'Counselor verified successfully. Forwarded to Class Advisor.', 'success', 3000);
     refreshAllAuthorityViews();
   } catch (err) {
-    alert('Verification failed.');
+    showToast('Verification server error.', 'error', 3500);
   }
 }
 
@@ -106,7 +133,7 @@ async function uploadCounselorExcel(event) {
   if (event) event.preventDefault();
   const fileInput = document.getElementById('counselorFile');
   const file = fileInput?.files[0];
-  if (!file) return alert('Please choose an Excel or CSV file first.');
+  if (!file) return showToast('Please choose an Excel or CSV file first.', 'warning', 3000);
 
   const fd = new FormData();
   fd.append('file', file);
@@ -116,9 +143,9 @@ async function uploadCounselorExcel(event) {
 
   try {
     const data = await Api.postFormData('/api/upload-students', fd);
-    alert(data.message || 'File processed successfully.');
+    showToast(data.message || 'File processed successfully.', 'success', 3500);
     fileInput.value = '';
   } catch (err) {
-    alert('File upload failed.');
+    showToast('File upload failed.', 'error', 3500);
   }
 }

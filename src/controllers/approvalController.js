@@ -274,6 +274,119 @@ async function approveGirlsWarden(req, res) {
   }
 }
 
+/**
+ * Universal Leave Application Rejection Handler across all authority levels
+ * (Counselor, Class Advisor, HOD, Principal, Warden)
+ */
+async function rejectPass(req, res) {
+  try {
+    const { passId, reason, rejectedBy, role } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(passId)) {
+      return res.status(400).json({ success: false, message: 'Invalid pass ID' });
+    }
+
+    if (!reason || !reason.trim()) {
+      return res.status(400).json({ success: false, message: 'Please provide a reason for rejection.' });
+    }
+
+    const pass = await Pass.findById(passId);
+    if (!pass) return res.status(404).json({ success: false, message: 'Pass not found' });
+
+    const now = getISTTimeString();
+    const roleTitles = {
+      counselor: 'Class Counselor',
+      advisor: 'Class Advisor',
+      hod: 'Head of Department (HOD)',
+      principal: 'Executive Directorate / Principal',
+      boys_warden: 'Boys Hostel Warden',
+      girls_warden: 'Girls Hostel Warden',
+      warden: 'Hostel Warden'
+    };
+    const roleTitle = roleTitles[role] || (role ? role.toUpperCase() : 'Authority');
+    const approverName = rejectedBy || 'Designated Authority';
+
+    pass.status = 'Rejected';
+    pass.rejectionReason = reason.trim();
+    pass.rejectedBy = `${roleTitle} (${approverName})`;
+    pass.rejectedTime = now;
+    pass.rejection = {
+      rejected: true,
+      rejectedBy: approverName,
+      role: role || 'authority',
+      roleTitle: roleTitle,
+      reason: reason.trim(),
+      time: now
+    };
+
+    await pass.save();
+    return res.json({
+      success: true,
+      message: `Leave application rejected by ${roleTitle}.`
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to reject pass', error: err.message });
+  }
+}
+
+/**
+ * Record student campus/hostel exit by Hostel Warden
+ */
+async function markWardenExit(req, res) {
+  try {
+    const { passId } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(passId)) {
+      return res.status(400).json({ success: false, message: 'Invalid pass ID' });
+    }
+
+    const pass = await Pass.findById(passId);
+    if (!pass) return res.status(404).json({ success: false, message: 'Pass not found' });
+
+    const nowIST = getISTTimeString();
+    pass.status = 'Exited';
+    pass.exitStatus = 'Exited Campus';
+    pass.exitTime = nowIST;
+
+    await pass.save();
+    return res.json({
+      success: true,
+      message: `Campus exit recorded for ${pass.name} (${pass.rollNo}) at ${nowIST}.`,
+      pass
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to record exit' });
+  }
+}
+
+/**
+ * Record student hostel/campus return by Hostel Warden
+ */
+async function markWardenReturn(req, res) {
+  try {
+    const { passId } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(passId)) {
+      return res.status(400).json({ success: false, message: 'Invalid pass ID' });
+    }
+
+    const pass = await Pass.findById(passId);
+    if (!pass) return res.status(404).json({ success: false, message: 'Pass not found' });
+
+    const nowIST = getISTTimeString();
+    pass.status = 'Returned';
+    pass.exitStatus = 'Returned to College';
+    pass.returnStatus = 'Returned';
+    pass.returnTime = nowIST;
+
+    await pass.save();
+    return res.json({
+      success: true,
+      message: `Student ${pass.name} (${pass.rollNo}) marked safely RETURNED at ${nowIST}.`,
+      pass
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to record return' });
+  }
+}
+
 module.exports = {
   approveCounselor,
   approveAdvisor,
@@ -281,5 +394,8 @@ module.exports = {
   approvePrincipal,
   approveWarden,
   approveBoysWarden,
-  approveGirlsWarden
+  approveGirlsWarden,
+  rejectPass,
+  markWardenExit,
+  markWardenReturn
 };

@@ -152,7 +152,11 @@ function sendParentWhatsApp(name, rollNo, dept, parentMobile, exitTime) {
   const cleanPhone = (parentMobile || '').replace(/[^0-9]/g, '');
 
   if (!cleanPhone || cleanPhone.length < 10) {
-    alert('No valid parent mobile number found for this student.');
+    if (typeof showToast === 'function') {
+      showToast('No valid parent mobile number found for this student.', 'error');
+    } else {
+      alert('No valid parent mobile number found for this student.');
+    }
     return;
   }
 

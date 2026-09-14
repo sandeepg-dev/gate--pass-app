@@ -4,7 +4,10 @@
   "description": "College Gate Pass Verification System",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "clear:passes": "node scripts/clearPasses.js",
+    "clear:db": "node scripts/clearDatabase.js"
   },
   "dependencies": {
         "bcryptjs": "^2.4.3",

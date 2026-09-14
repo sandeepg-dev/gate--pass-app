@@ -135,6 +135,27 @@ const PassSchema = new mongoose.Schema({
     default: ''
   },
 
+  rejectionReason: {
+    type: String,
+    default: ''
+  },
+  rejectedBy: {
+    type: String,
+    default: ''
+  },
+  rejectedTime: {
+    type: String,
+    default: ''
+  },
+  rejection: {
+    rejected: { type: Boolean, default: false },
+    rejectedBy: String,
+    role: String,
+    roleTitle: String,
+    reason: String,
+    time: String
+  },
+
   approvalTime: String,
   validUntil: String,
   expiresAt: {

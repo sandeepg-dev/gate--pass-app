@@ -9,66 +9,92 @@ async function fetchPrincipalQueue() {
   try {
     const passes = await Api.get('/api/passes?status=Pending%20Principal&role=principal');
 
+    const countBadge = document.getElementById('authBadge_requests');
+    if (countBadge) {
+      countBadge.innerText = (passes || []).length;
+      countBadge.className = (passes && passes.length > 0)
+        ? 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600 text-white animate-pulse'
+        : 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-600';
+    }
+    const kpiPending = document.getElementById('kpi_pending');
+    if (kpiPending) kpiPending.innerText = (passes || []).length;
+
     if (!passes || passes.length === 0) {
-      el.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 font-bold bg-white rounded-xl border border-slate-200">No requests currently pending Principal clearance across any department.</div>`;
+      el.innerHTML = `
+        <div class="p-12 text-center bg-white space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center text-2xl mx-auto shadow-2xs">🎉</div>
+          <div class="text-sm font-bold text-slate-800">No Pending Leave Requests</div>
+          <p class="text-xs md:text-sm text-slate-500 max-w-sm mx-auto">No student leave requisitions currently pending Principal clearance across any department.</p>
+        </div>`;
       return;
     }
 
     el.innerHTML = `
-      <table class="w-full text-left text-xs min-w-[700px] bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-        <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+      <table class="enterprise-table min-w-[900px]">
+        <thead>
           <tr>
-            <th class="p-3">Roll & Name</th>
-            <th class="p-3">Student Standing</th>
-            <th class="p-3">Comprehensive Timestamp Chain (IST)</th>
-            <th class="p-3">Reason & Letter</th>
-            <th class="p-3">Verification Chain</th>
-            <th class="p-3 text-right">Action</th>
+            <th>Student & Roll No</th>
+            <th>Class & Accommodation</th>
+            <th>Multi-Tier Audit Chain (IST)</th>
+            <th>Reason & Document</th>
+            <th>Verification Chain</th>
+            <th class="text-right">Directorate Decision</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody>
           ${passes
             .map(
               p => `
-            <tr class="hover:bg-slate-50 transition">
-              <td class="p-3 font-mono">
-                <span class="font-bold text-red-600">${p.rollNo}</span><br>
-                <span class="text-slate-800 font-sans font-semibold">${p.name}</span>
+            <tr>
+              <td>
+                <div class="font-bold text-slate-900 text-sm">${escapeHtml(p.name)}</div>
+                <div class="font-mono text-xs font-bold text-red-700 bg-red-50/80 border border-red-200/60 inline-block px-2 py-0.5 rounded-md mt-0.5">${p.rollNo}</div>
               </td>
-              <td class="p-3 font-mono text-slate-600 font-bold">
-                ${formatClassSection(p.dept, p.yearSec, p.academicYear)}
+              <td>
+                <div class="font-semibold text-slate-800 text-xs md:text-sm">${formatClassSection(p.dept, p.yearSec, p.academicYear)}</div>
                 <div class="mt-1">
                   ${formatAccommodationBadge(p.accommodation)}
                 </div>
               </td>
-              <td class="p-3 font-mono text-[10px] space-y-0.5 bg-slate-50 p-2 rounded">
-                <div><b>1. Applied:</b> ${p.appliedTime || '-'}</div>
-                <div class="text-emerald-700"><b>2. Counselor:</b> ${p.counselorApproval?.time || p.parentCallTime || '-'}</div>
-                <div class="text-indigo-700"><b>3. Advisor:</b> ${p.advisorApproval?.time || '-'}</div>
-                <div class="text-purple-700"><b>4. HOD:</b> ${p.hodApproval?.time || '-'}</div>
-              </td>
-              <td class="p-3 max-w-xs">
-                <div class="font-bold text-slate-800 text-[11px] mb-1">"${escapeHtml(p.reason)}"</div>
-                <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded text-[10px] font-bold hover:bg-blue-100">
-                  📄 Read Letter
-                </button>
-              </td>
-              <td class="p-3">
-                <div class="space-y-1">
-                  <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">✓ ${p.parentCalledBy || 'I talked to their parents'}</span><br>
-                  <span class="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">✓ Advisor: ${p.advisorApproval?.advisorName || 'Approved'} & HOD: ${p.hodApproval?.hodName || 'Authorized'}</span>
+              <td>
+                <div class="font-mono text-xs text-slate-700 space-y-1 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+                  <div><span class="text-slate-500 font-sans">1. Applied:</span> ${p.appliedTime || '-'}</div>
+                  <div class="text-emerald-800 font-semibold"><span class="text-emerald-600 font-sans">2. Counselor:</span> ${p.counselorApproval?.time || p.parentCallTime || '-'}</div>
+                  <div class="text-indigo-800 font-semibold"><span class="text-indigo-600 font-sans">3. Advisor:</span> ${p.advisorApproval?.time || '-'}</div>
+                  <div class="text-purple-800 font-semibold"><span class="text-purple-600 font-sans">4. HOD:</span> ${p.hodApproval?.time || '-'}</div>
                 </div>
               </td>
-              <td class="p-3 text-right">
-                ${
-                  /hostel/i.test(p.accommodation || '')
-                    ? `<button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition active:scale-95 whitespace-nowrap text-xs">
-                        Forward to ${p.gender === 'Female' ? 'Girls Hostel Warden' : 'Boys Hostel Warden'} ➔
-                      </button>`
-                    : `<button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition active:scale-95 whitespace-nowrap text-xs">
-                        Final Approval (20-Min Pass) ➔
-                      </button>`
-                }
+              <td class="max-w-xs">
+                <div class="font-medium text-slate-800 text-xs md:text-sm leading-relaxed mb-1.5 line-clamp-2">"${escapeHtml(p.reason)}"</div>
+                <button onclick="viewFormalLetter(${escapeAttr(p)})" class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition active:scale-95">
+                  📄 View Letter
+                </button>
+              </td>
+              <td>
+                <div class="space-y-1.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                    ✓ ${p.parentCalledBy || 'I talked to parents'}
+                  </span><br>
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
+                    ✓ Advisor & HOD Endorsed
+                  </span>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <button onclick="openRejectModal('${p._id}', 'Principal')" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/80 font-semibold rounded-xl shadow-2xs whitespace-nowrap transition active:scale-95 text-xs md:text-sm">
+                    ✕ Reject
+                  </button>
+                  ${
+                    /hostel/i.test(p.accommodation || '')
+                      ? `<button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded-xl shadow-2xs transition active:scale-95 whitespace-nowrap text-xs md:text-sm flex items-center gap-1.5">
+                          <span>Forward to ${p.gender === 'Female' ? 'Girls Warden' : 'Boys Warden'} ➔</span>
+                        </button>`
+                      : `<button onclick="approveGenericPass('${p._id}', '/api/approve/principal')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-2xs transition active:scale-95 whitespace-nowrap text-xs md:text-sm flex items-center gap-1.5">
+                          <span>Final Clearance (20-Min Pass) ➔</span>
+                        </button>`
+                  }
+                </div>
               </td>
             </tr>
           `
@@ -78,7 +104,7 @@ async function fetchPrincipalQueue() {
       </table>
     `;
   } catch (err) {
-    el.innerHTML = `<div class="p-4 text-center text-xs text-rose-500">Failed to load Principal queue.</div>`;
+    el.innerHTML = `<div class="p-8 text-center text-xs md:text-sm text-rose-500 font-semibold">Failed to load Principal queue.</div>`;
   }
 }
 
@@ -86,12 +112,12 @@ async function approveGenericPass(passId, endpoint) {
   try {
     const data = await Api.post(endpoint, { passId });
     if (data && (data.success === false || data.error)) {
-      alert(data.message || data.error || 'Clearance could not be completed.');
+      showToast(data.message || data.error || 'Clearance could not be completed.', 'error', 3500);
       return;
     }
-    alert(data.message || 'Pass approved successfully.');
+    showToast(data.message || 'Principal approval granted successfully.', 'success', 3000);
     refreshAllAuthorityViews();
   } catch (err) {
-    alert('Server processing error.');
+    showToast('Principal clearance server error.', 'error', 3500);
   }
 }

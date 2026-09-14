@@ -18,6 +18,16 @@ async function checkRoleExists(req, res) {
       return res.json({ exists: !!exists, registeredName: exists ? exists.name : '' });
     }
 
+    if (role === 'boys_warden' || role === 'boys warden') {
+      const exists = await User.findOne({ role: { $in: ['boys_warden', 'boys warden'] } });
+      return res.json({ exists: !!exists, registeredName: exists ? exists.name : '' });
+    }
+
+    if (role === 'girls_warden' || role === 'girls warden') {
+      const exists = await User.findOne({ role: { $in: ['girls_warden', 'girls warden'] } });
+      return res.json({ exists: !!exists, registeredName: exists ? exists.name : '' });
+    }
+
     if (role === 'hod' && dept) {
       const exists = await User.findOne({ role: 'hod', dept: dept.toUpperCase().trim() });
       return res.json({ exists: !!exists, registeredName: exists ? exists.name : '' });
@@ -112,6 +122,26 @@ async function register(req, res) {
         return res.status(400).json({
           success: false,
           message: `The Principal position is already registered college-wide by ${existing.name}.`
+        });
+      }
+    }
+
+    if (role === 'boys_warden' || role === 'boys warden') {
+      const existing = await User.findOne({ role: { $in: ['boys_warden', 'boys warden'] } });
+      if (existing) {
+        return res.status(400).json({
+          success: false,
+          message: `The Boys Warden position is already registered by ${existing.name}. Only one Boys Warden account is permitted.`
+        });
+      }
+    }
+
+    if (role === 'girls_warden' || role === 'girls warden') {
+      const existing = await User.findOne({ role: { $in: ['girls_warden', 'girls warden'] } });
+      if (existing) {
+        return res.status(400).json({
+          success: false,
+          message: `The Girls Warden position is already registered by ${existing.name}. Only one Girls Warden account is permitted.`
         });
       }
     }

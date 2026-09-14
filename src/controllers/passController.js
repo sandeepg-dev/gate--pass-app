@@ -81,20 +81,56 @@ async function getPasses(req, res) {
         return passObj;
       })
       .filter(p => {
+        // Sequential clearance visibility hierarchy:
+        // Counsellor (Tier 1) → Class Advisor (Tier 2) → HOD (Tier 3) → Principal (Tier 4) → Warden (Tier 5)
+        // Rule 1: A leave application must only be displayed to the current authority once forwarded.
+        // Rule 2: Once rejected at an authority level, it must NOT appear on any subsequent authority's dashboard.
+
+        // Advisor (Tier 2):
+        if (role === 'advisor') {
+          const reachedAdvisor = p.counselorApproval?.approved === true || p.status === 'Pending Advisor';
+          if (!reachedAdvisor) return false;
+          if (p.status === 'Rejected' && !p.counselorApproval?.approved) return false;
+        }
+
+        // HOD (Tier 3):
+        if (role === 'hod') {
+          const reachedHod = p.advisorApproval?.approved === true || p.status === 'Pending HOD';
+          if (!reachedHod) return false;
+          if (p.status === 'Rejected' && !p.advisorApproval?.approved) return false;
+        }
+
+        // Principal (Tier 4):
+        if (role === 'principal') {
+          const reachedPrincipal = p.hodApproval?.approved === true || p.status === 'Pending Principal';
+          if (!reachedPrincipal) return false;
+          if (p.status === 'Rejected' && !p.hodApproval?.approved) return false;
+        }
+
+        // Boys Warden (Tier 5):
         if (role === 'boys_warden') {
-          // Strictly Male Hostellers only - never Female, never Day Scholar
           const isHostel = /hostel/i.test(p.accommodation) && !/day\s*scholar/i.test(p.accommodation);
           const isNotFemale = !/^female$/i.test(String(p.gender || '').trim());
           const isNotGirlsStatus = p.status !== 'Pending Girls Warden';
-          return isHostel && isNotFemale && isNotGirlsStatus;
+          if (!isHostel || !isNotFemale || !isNotGirlsStatus) return false;
+
+          const reachedWarden = p.principalApproval?.approved === true || p.status === 'Pending Boys Warden';
+          if (!reachedWarden) return false;
+          if (p.status === 'Rejected' && !p.principalApproval?.approved) return false;
         }
+
+        // Girls Warden (Tier 5):
         if (role === 'girls_warden') {
-          // Strictly Female Hostellers only - never Male, never Day Scholar
           const isHostel = /hostel/i.test(p.accommodation) && !/day\s*scholar/i.test(p.accommodation);
           const isFemale = /^female$/i.test(String(p.gender || '').trim()) || p.status === 'Pending Girls Warden';
           const isNotBoysStatus = p.status !== 'Pending Boys Warden';
-          return isHostel && isFemale && isNotBoysStatus;
+          if (!isHostel || !isFemale || !isNotBoysStatus) return false;
+
+          const reachedWarden = p.principalApproval?.approved === true || p.status === 'Pending Girls Warden';
+          if (!reachedWarden) return false;
+          if (p.status === 'Rejected' && !p.principalApproval?.approved) return false;
         }
+
         return true;
       });
     res.json(normalizedPasses);
@@ -137,10 +173,10 @@ async function applyPass(req, res) {
       }
     }
 
-    const studentYear = student?.academicYear || studentUser?.academicYear || '3 Year';
-    const rawAccom = student?.accommodation || studentUser?.accommodation || '';
+    const studentYear = req.body.academicYear || student?.academicYear || studentUser?.academicYear || '3 Year';
+    const rawAccom = req.body.accommodation || student?.accommodation || studentUser?.accommodation || '';
     const studentAccom = /hostel/i.test(rawAccom) ? 'Hosteller' : 'Day Scholar';
-    const rawGender = student?.gender || studentUser?.gender || 'Male';
+    const rawGender = req.body.gender || student?.gender || studentUser?.gender || 'Male';
     const studentGender = /^female$/i.test(String(rawGender).trim()) ? 'Female' : 'Male';
     const appliedTimestamp = getISTTimeString();
 
@@ -174,14 +210,38 @@ async function applyPass(req, res) {
     await newPass.save();
     res.json({
       success: true,
-      message: `Requisition submitted & routed to Counselor (${assignedCounselor}).`
+      message: `Requisition submitted & routed to Counselor (${assignedCounselor}).`,
+      passId: newPass._id,
+      pass: newPass
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message || 'Failed to submit requisition', error: err.message });
   }
 }
 
+/**
+ * Clear all gate passes / leave applications from database
+ */
+async function clearAllPasses(req, res) {
+  try {
+    const result = await Pass.deleteMany({});
+    res.json({
+      success: true,
+      message: `Successfully cleared all leave applications (${result.deletedCount} records deleted). All queues, logs, and trackers are now empty.`,
+      deletedCount: result.deletedCount
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Failed to clear passes',
+      error: err.message
+    });
+  }
+}
+
 module.exports = {
   getPasses,
-  applyPass
+  applyPass,
+  clearAllPasses
 };
+
